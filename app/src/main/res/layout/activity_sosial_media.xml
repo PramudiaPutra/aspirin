@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".ui.sosialmedia.SosialMediaActivity">
+    tools:context=".ui.home.sosialmedia.SosialMediaActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/aspirin_icon"
@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/fragment_cerita"
-        android:name="org.d3ifcool.aspirin.ui.sosialmedia.StoryFragment"
+        android:name="org.d3ifcool.aspirin.ui.home.sosialmedia.StoryFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

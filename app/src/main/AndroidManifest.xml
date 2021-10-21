@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aspirin">
         <activity
-            android:name=".ui.sosialmedia.SosialMediaActivity"
+            android:name="org.d3ifcool.aspirin.ui.home.sosialmedia.SosialMediaActivity"
             android:exported="false" />
         <activity
             android:name=".ui.authentication.RegisterActivity"

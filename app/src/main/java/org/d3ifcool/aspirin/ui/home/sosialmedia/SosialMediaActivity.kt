@@ -1,4 +1,4 @@
-package org.d3ifcool.aspirin.ui.sosialmedia
+package org.d3ifcool.aspirin.ui.home.sosialmedia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
