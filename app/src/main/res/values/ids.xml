@@ -2,4 +2,5 @@
 <resources>
     <item name="text_view2" type="id" />
     <item name="text_view3" type="id" />
+    <item name="text_view4" type="id" />
 </resources>
