@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aspirin">
         <activity
+            android:name=".ui.authentication.PostingStoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.sosialmedia.SosialMediaActivity"
             android:exported="false" />
         <activity
