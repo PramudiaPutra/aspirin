@@ -1,4 +1,4 @@
-package org.d3ifcool.aspirin.ui.authentication
+package org.d3ifcool.aspirin.ui.authentication.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -7,9 +7,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
-import org.d3ifcool.aspirin.MainActivity
 import org.d3ifcool.aspirin.R
-import org.d3ifcool.aspirin.ui.authentication.LoginActivity
+import org.d3ifcool.aspirin.ui.authentication.login.LoginActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreen : AppCompatActivity() {
