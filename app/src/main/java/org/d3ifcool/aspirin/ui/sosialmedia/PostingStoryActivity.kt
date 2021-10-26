@@ -1,4 +1,4 @@
-package org.d3ifcool.aspirin.ui.authentication
+package org.d3ifcool.aspirin.ui.sosialmedia
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
