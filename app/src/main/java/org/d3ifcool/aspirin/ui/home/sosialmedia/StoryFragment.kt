@@ -1,4 +1,4 @@
-package org.d3ifcool.aspirin.ui.sosialmedia
+package org.d3ifcool.aspirin.ui.home.sosialmedia
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

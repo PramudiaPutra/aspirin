@@ -1,4 +1,4 @@
-package org.d3ifcool.aspirin.ui.sosialmedia
+package org.d3ifcool.aspirin.ui.home.sosialmedia
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
