@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "812086970124",
+    "project_id": "aspirin-aspirasi-indonesia",
+    "storage_bucket": "aspirin-aspirasi-indonesia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812086970124:android:26ce32fcdc71adc9fe2b29",
+        "android_client_info": {
+          "package_name": "org.d3ifcool.aspirin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812086970124-ll8su8b0hpc06h1p7m5ck5t8u17d1ls8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.d3ifcool.aspirin",
+            "certificate_hash": "c8cedc2a620989a5e14a5cfa9802c718c5fef2bd"
+          }
+        },
+        {
+          "client_id": "812086970124-39fgt4oihtddja89esvgl655gdhc89pj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7vWWWz3KgYPd14sV29geM9olp9bazzXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812086970124-39fgt4oihtddja89esvgl655gdhc89pj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

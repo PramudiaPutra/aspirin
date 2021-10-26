@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".ui.authentication.LoginActivity">
+    tools:context=".ui.authentication.login.LoginActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/aspirin_icon"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toEndOf="@id/aspirin_icon" />
 
     <LinearLayout
-        android:id="@+id/_button_google_login"
+        android:id="@+id/button_google_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -71,7 +71,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/_button_google_login" />
+        app:layout_constraintTop_toBottomOf="@id/button_google_login" />
 
     <View
         android:layout_width="0dp"
@@ -79,7 +79,7 @@
         android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/text_view1"
         app:layout_constraintEnd_toStartOf="@id/text_view1"
-        app:layout_constraintStart_toStartOf="@id/_button_google_login"
+        app:layout_constraintStart_toStartOf="@id/button_google_login"
         app:layout_constraintTop_toTopOf="@id/text_view1" />
 
     <View
@@ -87,7 +87,7 @@
         android:layout_height="1dp"
         android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/text_view1"
-        app:layout_constraintEnd_toEndOf="@id/_button_google_login"
+        app:layout_constraintEnd_toEndOf="@id/button_google_login"
         app:layout_constraintStart_toEndOf="@id/text_view1"
         app:layout_constraintTop_toTopOf="@id/text_view1" />
 
