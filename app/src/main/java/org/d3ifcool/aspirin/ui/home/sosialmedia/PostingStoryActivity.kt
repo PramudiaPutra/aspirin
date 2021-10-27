@@ -1,5 +1,6 @@
 package org.d3ifcool.aspirin.ui.home.sosialmedia
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,8 @@ class PostingStoryActivity : AppCompatActivity() {
 
         binding.btnKirimKegiatan.setOnClickListener {
             posting()
+            val intent = Intent(this, SosialMediaActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -62,7 +65,6 @@ class PostingStoryActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance("https://aspirin-aspirasi-indonesia-default-rtdb.asia-southeast1.firebasedatabase.app").reference
         database.child("postingan").child(database.push().key.toString())
             .setValue(postingan)
-
     }
 
     private fun showMessage(messageResId: Int) {
