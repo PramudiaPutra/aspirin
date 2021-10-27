@@ -1,26 +1,24 @@
 package org.d3ifcool.aspirin.ui.home.sosialmedia
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import androidx.lifecycle.ViewModelProvider
 import org.d3ifcool.aspirin.R
 import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingData
 import org.d3ifcool.aspirin.databinding.ActivityPostingStoryBinding
+import org.d3ifcool.aspirin.ui.home.viewmodel.PostingViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class PostingStoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPostingStoryBinding
-    private lateinit var database: DatabaseReference
+    private val viewModel : PostingViewModel by lazy {
+        ViewModelProvider(this).get(PostingViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,9 +60,7 @@ class PostingStoryActivity : AppCompatActivity() {
             currentDate
         )
 
-        database = FirebaseDatabase.getInstance("https://aspirin-aspirasi-indonesia-default-rtdb.asia-southeast1.firebasedatabase.app").reference
-        database.child("postingan").child(database.push().key.toString())
-            .setValue(postingan)
+        viewModel.postData(postingan)
     }
 
     private fun showMessage(messageResId: Int) {

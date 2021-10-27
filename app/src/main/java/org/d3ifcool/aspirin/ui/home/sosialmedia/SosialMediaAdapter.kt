@@ -8,7 +8,7 @@ import org.d3ifcool.aspirin.R
 import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingData
 import org.d3ifcool.aspirin.databinding.ItemCardviewPostinganBinding
 
-class SosialMediaAdapter(context: StoryFragment) : RecyclerView.Adapter<SosialMediaAdapter.ViewHolder>() {
+class SosialMediaAdapter : RecyclerView.Adapter<SosialMediaAdapter.ViewHolder>() {
     private var listData = mutableListOf<PostingData>()
     fun setListData(data:MutableList<PostingData>){
         listData = data
