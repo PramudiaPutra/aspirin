@@ -11,15 +11,16 @@
         android:theme="@style/Theme.Aspirin">
         <activity
             android:name="org.d3ifcool.aspirin.ui.home.sosialmedia.SosialMediaActivity"
-            android:exported="false" />
-        <activity
-            android:name="org.d3ifcool.aspirin.ui.home.sosialmedia.PostingStoryActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="org.d3ifcool.aspirin.ui.home.sosialmedia.PostingStoryActivity"
+            android:exported="true" >
         </activity>
         <activity
             android:name=".ui.authentication.RegisterActivity"
