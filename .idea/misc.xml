@@ -4,10 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/aspirin_logo.xml" value="0.17314814814814813" />
+        <entry key="app/src/main/res/drawable/button_round.xml" value="0.3328125" />
+        <entry key="app/src/main/res/drawable/button_round_ripple.xml" value="0.2638888888888889" />
+        <entry key="app/src/main/res/drawable/cross_icon.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/drawable/group_5915.xml" value="0.17314814814814813" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.36205128205128206" />
         <entry key="app/src/main/res/drawable/splash_screen_gradient.xml" value="0.1574074074074074" />
         <entry key="app/src/main/res/font/acme.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/font/acme_font.xml" value="0.16666666666666666" />
+        <entry key="app/src/main/res/layout/activity_camera.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.30104166666666665" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.1686746987951807" />
