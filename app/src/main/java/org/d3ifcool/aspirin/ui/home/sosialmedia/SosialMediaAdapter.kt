@@ -35,8 +35,6 @@ class SosialMediaAdapter(private val listData: ArrayList<PostingData>) : Recycle
             tvLokasiPosting.text = dataPosting.lokasiPosting
             tvTitlePosting.text = dataPosting.judulPosting
             tvKontenPosting.text = dataPosting.deskripsiPosting
-            Glide.with(profileImage.context).load(dataPosting.imgUser).into(profileImage)
-            Glide.with(imgPosting.context).load(dataPosting.imgPosting).into(imgPosting)
         }
     }
 

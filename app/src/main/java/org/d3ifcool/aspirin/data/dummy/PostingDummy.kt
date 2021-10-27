@@ -10,8 +10,6 @@ class PostingDummy {
             list.add(
                 PostingData(
                     "Akhdan Pangestuaji",
-                    R.drawable.aspirin_main_icon,
-                    R.drawable.hint_rv,
                     "Ini Judul 1",
                     "Purwokerto",
                     "Ini adalah deskripsi",
@@ -22,8 +20,6 @@ class PostingDummy {
             list.add(
                 PostingData(
                     "Akhdan Pangestuaji",
-                    R.drawable.aspirin_main_icon,
-                    R.drawable.hint_rv,
                     "Ini Judul 2",
                     "Purwokerto",
                     "Ini adalah deskripsi",
