@@ -1,6 +1,5 @@
 package org.d3ifcool.aspirin.ui.home.sosialmedia
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +8,11 @@ import org.d3ifcool.aspirin.R
 import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingData
 import org.d3ifcool.aspirin.databinding.ItemCardviewPostinganBinding
 
-class SosialMediaAdapter(private val listData: ArrayList<PostingData>) : RecyclerView.Adapter<SosialMediaAdapter.ViewHolder>() {
+class SosialMediaAdapter(context: StoryFragment) : RecyclerView.Adapter<SosialMediaAdapter.ViewHolder>() {
+    private var listData = mutableListOf<PostingData>()
+    fun setListData(data:MutableList<PostingData>){
+        listData = data
+    }
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
