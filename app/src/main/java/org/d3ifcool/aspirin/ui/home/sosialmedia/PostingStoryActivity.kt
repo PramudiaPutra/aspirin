@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import com.google.firebase.auth.FirebaseUser
 import com.otaliastudios.cameraview.CameraUtils
 import org.d3ifcool.aspirin.databinding.ActivityPostingStoryBinding
 import org.d3ifcool.aspirin.ui.camera.PhotoPreviewActivity
@@ -20,6 +21,7 @@ import java.io.File
 class PostingStoryActivity : AppCompatActivity() {
 
     lateinit var photoUri: Uri
+    lateinit var username: String
 
     private lateinit var binding: ActivityPostingStoryBinding
     private val viewModel: PostingViewModel by lazy {
@@ -37,6 +39,8 @@ class PostingStoryActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        viewModel.authUser.observe(this, {getCurrentUser(it)})
+
         val result = PhotoPreviewActivity.pictureResult ?: run {
             finish()
             return
@@ -47,6 +51,10 @@ class PostingStoryActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Toast.makeText(this, "preview error $e", Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun getCurrentUser(user: FirebaseUser?) {
+        username = user!!.displayName.toString()
     }
 
     private fun posting() {
@@ -74,7 +82,7 @@ class PostingStoryActivity : AppCompatActivity() {
                 val context = this@PostingStoryActivity
                 photoUri =
                     FileProvider.getUriForFile(context, context.packageName + ".provider", file)
-                viewModel.postData("username", judul, lokasi, deskripsi, currentDate, photoUri)
+                viewModel.postData(username, judul, lokasi, deskripsi, currentDate, photoUri)
             } else {
                 Toast.makeText(
                     this@PostingStoryActivity,

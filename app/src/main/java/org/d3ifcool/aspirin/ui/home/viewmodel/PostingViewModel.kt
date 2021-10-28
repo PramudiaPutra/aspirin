@@ -8,14 +8,17 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.d3ifcool.aspirin.data.viewmodel.authentication.UserLiveData
 import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingData
 import org.d3ifcool.aspirin.ui.home.network.Repo
 
-class PostingViewModel() : ViewModel() {
+class PostingViewModel : ViewModel() {
+    val authUser = UserLiveData()
+
     private val repo = Repo()
-    fun fetchPostingData():LiveData<MutableList<PostingData>>{
+    fun fetchPostingData(): LiveData<MutableList<PostingData>> {
         val mutableData = MutableLiveData<MutableList<PostingData>>()
-        repo.getPostingData().observeForever{
+        repo.getPostingData().observeForever {
             mutableData.value = it
         }
         return mutableData
