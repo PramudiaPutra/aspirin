@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.d3ifcool.aspirin.databinding.FragmentStoryBinding
 import org.d3ifcool.aspirin.ui.home.viewmodel.PostingViewModel
+import org.d3ifcool.aspirin.databinding.FragmentStoryBinding
+import org.d3ifcool.aspirin.ui.camera.CameraActivity
 
 
 class StoryFragment : Fragment() {

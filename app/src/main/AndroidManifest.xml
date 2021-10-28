@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.d3ifcool.aspirin">
+    package="org.d3ifcool.aspirin" >
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -8,20 +15,19 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Aspirin">
+        android:theme="@style/Theme.Aspirin" >
         <activity
-            android:name="org.d3ifcool.aspirin.ui.home.sosialmedia.SosialMediaActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".ui.camera.PhotoPreviewActivity"
+            android:exported="false" />
         <activity
-            android:name="org.d3ifcool.aspirin.ui.home.sosialmedia.PostingStoryActivity"
-            android:exported="false" >
-        </activity>
+            android:name=".ui.camera.CameraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.sosialmedia.SosialMediaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.sosialmedia.PostingStoryActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.authentication.RegisterActivity"
             android:exported="false" />
@@ -30,8 +36,12 @@
             android:exported="false" />
         <activity
             android:name=".ui.SplashScreen"
-            android:exported="false">
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
@@ -40,6 +50,16 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
     </application>
 
 </manifest>
