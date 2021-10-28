@@ -5,5 +5,6 @@ data class PostingData(
     val judulPosting: String? = null,
     val lokasiPosting: String? = null,
     val deskripsiPosting: String? = null,
-    val tanggalPosting: String? = null
+    val tanggalPosting: String? = null,
+    val photoUrl: String? = null
 )

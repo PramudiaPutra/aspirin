@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.d3ifcool.aspirin.databinding.FragmentStoryBinding
 import org.d3ifcool.aspirin.ui.home.viewmodel.PostingViewModel
 import org.d3ifcool.aspirin.databinding.FragmentStoryBinding
 import org.d3ifcool.aspirin.ui.camera.CameraActivity
@@ -41,7 +40,7 @@ class StoryFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener {
-            val intent = Intent(context, PostingStoryActivity::class.java)
+            val intent = Intent(context, CameraActivity::class.java)
             startActivity(intent)
         }
         return binding.root

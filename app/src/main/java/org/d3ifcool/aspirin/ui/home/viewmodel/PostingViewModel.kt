@@ -1,5 +1,6 @@
 package org.d3ifcool.aspirin.ui.home.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,11 +21,26 @@ class PostingViewModel() : ViewModel() {
         return mutableData
     }
 
-    fun postData(postingData: PostingData){
+    fun postData(
+        username: String,
+        judul: String,
+        lokasi: String,
+        deskripsi: String,
+        currentDate: String,
+        photoUri: Uri
+    ) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
-                repo.postData(postingData)
+            withContext(Dispatchers.IO) {
+                repo.postData(username, judul, lokasi, deskripsi, currentDate, photoUri)
             }
         }
     }
+
+//    fun postData(postingData: PostingData){
+//        viewModelScope.launch {
+//            withContext(Dispatchers.IO){
+//                repo.postData(postingData)
+//            }
+//        }
+//    }
 }
