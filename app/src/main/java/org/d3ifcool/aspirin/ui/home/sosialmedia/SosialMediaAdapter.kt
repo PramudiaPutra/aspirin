@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import org.d3ifcool.aspirin.R
-import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingData
+import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import org.d3ifcool.aspirin.databinding.ItemCardviewPostinganBinding
 
 class SosialMediaAdapter : RecyclerView.Adapter<SosialMediaAdapter.ViewHolder>() {

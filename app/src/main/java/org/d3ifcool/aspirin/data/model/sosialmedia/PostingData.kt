@@ -1,4 +1,4 @@
-package org.d3ifcool.aspirin.data.viewmodel.sosialmedia
+package org.d3ifcool.aspirin.data.model.sosialmedia
 
 data class PostingData(
     val username: String? = null,

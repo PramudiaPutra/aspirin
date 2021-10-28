@@ -10,6 +10,7 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.google.firebase.auth.FirebaseUser
 import org.d3ifcool.aspirin.data.viewmodel.authentication.AuthViewModel
 import org.d3ifcool.aspirin.databinding.ActivityLoginBinding
+import org.d3ifcool.aspirin.ui.authentication.RegisterActivity
 import org.d3ifcool.aspirin.ui.home.sosialmedia.SosialMediaActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -29,6 +30,12 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.buttonGoogleLogin.setOnClickListener { startLogin() }
+
+        binding.toRegister.setOnClickListener {
+            startActivity(
+                Intent(this, RegisterActivity::class.java)
+            )
+        }
 
         viewModel.authState.observe(this, { authState(it) })
 
