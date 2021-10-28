@@ -63,4 +63,7 @@ dependencies {
     //Firebase UI
     implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
 
+    //CameraView
+    api("com.otaliastudios:cameraview:2.7.2")
+
 }
