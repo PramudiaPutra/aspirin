@@ -1,7 +1,6 @@
 package org.d3ifcool.aspirin.data.dummy
 
-import org.d3ifcool.aspirin.R
-import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingData
+import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 
 class PostingDummy {
     companion object{

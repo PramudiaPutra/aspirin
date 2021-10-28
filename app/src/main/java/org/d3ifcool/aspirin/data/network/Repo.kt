@@ -1,15 +1,14 @@
-package org.d3ifcool.aspirin.ui.home.network
+package org.d3ifcool.aspirin.data.network
 
 import android.net.Uri
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
-import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingData
+import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import java.io.File
 
 class Repo {

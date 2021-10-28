@@ -1,4 +1,4 @@
-package org.d3ifcool.aspirin.ui.home.viewmodel
+package org.d3ifcool.aspirin.data.viewmodel.sosialmedia
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
@@ -9,8 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.d3ifcool.aspirin.data.viewmodel.authentication.UserLiveData
-import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingData
-import org.d3ifcool.aspirin.ui.home.network.Repo
+import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
+import org.d3ifcool.aspirin.data.network.Repo
 
 class PostingViewModel : ViewModel() {
     val authUser = UserLiveData()

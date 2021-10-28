@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.d3ifcool.aspirin.ui.home.viewmodel.PostingViewModel
+import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingViewModel
 import org.d3ifcool.aspirin.databinding.FragmentStoryBinding
 import org.d3ifcool.aspirin.ui.camera.CameraActivity
 
