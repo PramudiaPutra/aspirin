@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import org.d3ifcool.aspirin.databinding.FragmentStoryBinding
+import org.d3ifcool.aspirin.ui.camera.CameraActivity
 
 class StoryFragment : Fragment() {
 
