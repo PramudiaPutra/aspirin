@@ -5,13 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.firebase.ui.auth.AuthUI
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import org.d3ifcool.aspirin.R
 import org.d3ifcool.aspirin.data.viewmodel.authentication.AuthViewModel
 import org.d3ifcool.aspirin.databinding.ActivitySettingBinding
 import org.d3ifcool.aspirin.ui.authentication.login.LoginActivity
-import org.d3ifcool.aspirin.ui.home.sosialmedia.SosialMediaActivity
 
 class SettingActivity : AppCompatActivity() {
 
@@ -26,7 +23,7 @@ class SettingActivity : AppCompatActivity() {
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.authState.observe(this, { getCurrentUser(it) })
+        viewModel.auth.observe(this, { getCurrentUser(it) })
 
         binding.buttonKeluar.setOnClickListener {
             logOut()
