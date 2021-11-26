@@ -3,6 +3,8 @@ package org.d3ifcool.aspirin.ui.authentication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -22,10 +24,38 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        checkEmptyForm()
+        checkRegisterStatus()
 
         binding.haveAccount.setOnClickListener { onBackPressed() }
         binding.buttonRegister.setOnClickListener { registerUser() }
+    }
 
+    private fun checkEmptyForm() {
+        with(binding) {
+            buttonRegister.isEnabled = false
+            val editTexts = listOf(edtUsername, edtEmail, edtPassword)
+            for (editText in editTexts) {
+                editText.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        val edtUsername = edtUsername.text.toString().trim()
+                        val edtEmail = edtEmail.text.toString().trim()
+                        val edtPassword = edtPassword.text.toString().trim()
+
+                        buttonRegister.isEnabled = (edtUsername.isNotEmpty()
+                                && edtEmail.isNotEmpty()
+                                && edtPassword.isNotEmpty())
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {}
+                })
+            }
+        }
+    }
+
+    private fun checkRegisterStatus() {
         viewModel.getRegisterStatus().observe(this, { registered ->
             if (registered) {
                 Toast.makeText(
