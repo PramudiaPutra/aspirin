@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "812086970124",
+    "firebase_url": "https://aspirin-aspirasi-indonesia-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "aspirin-aspirasi-indonesia",
     "storage_bucket": "aspirin-aspirasi-indonesia.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "812086970124-632rk1irounmgfdhnncdumr1999jkov6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.d3ifcool.aspirin",
+            "certificate_hash": "2a0f73bb5f91268fc2bd885ba08f32ea43d3dc6b"
+          }
+        },
         {
           "client_id": "812086970124-ll8su8b0hpc06h1p7m5ck5t8u17d1ls8.apps.googleusercontent.com",
           "client_type": 1,
