@@ -8,7 +8,7 @@ import com.google.firebase.auth.UserProfileChangeRequest
 
 class UserLiveData : LiveData<FirebaseUser?>() {
     private val firebaseAuth = FirebaseAuth.getInstance()
-    var registerState = MutableLiveData<Boolean>()
+    var authState = MutableLiveData<Boolean>()
     private var errorMessage = ""
 
     private val authStateListener = FirebaseAuth.AuthStateListener {
@@ -23,6 +23,17 @@ class UserLiveData : LiveData<FirebaseUser?>() {
         firebaseAuth.removeAuthStateListener(authStateListener)
     }
 
+    fun login(email: String, password: String) {
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                authState.postValue(true)
+            } else {
+                authState.postValue(false)
+                errorMessage = task.exception?.message.toString()
+            }
+        }
+    }
+
     fun register(username: String, email: String, password: String) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -35,16 +46,16 @@ class UserLiveData : LiveData<FirebaseUser?>() {
 
                 currentUser?.updateProfile(addUserName)
                 firebaseAuth.signOut()
-                registerState.postValue(true)
+                authState.postValue(true)
             } else {
-                registerState.postValue(false)
+                authState.postValue(false)
                 errorMessage = task.exception?.message.toString()
             }
         }
     }
 
-    fun getRegisterStatus(): LiveData<Boolean> {
-        return registerState
+    fun getAuthStatus(): LiveData<Boolean> {
+        return authState
     }
 
     fun getErrMessage(): String {
