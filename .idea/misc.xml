@@ -10,12 +10,13 @@
         <entry key="app/src/main/res/drawable/cross_icon.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/drawable/group_5915.xml" value="0.17314814814814813" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.36205128205128206" />
+        <entry key="app/src/main/res/drawable/splash_screen.xml" value="0.2611111111111111" />
         <entry key="app/src/main/res/drawable/splash_screen_gradient.xml" value="0.1574074074074074" />
         <entry key="app/src/main/res/font/acme.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/font/acme_font.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/layout/activity_camera.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.30104166666666665" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.22685185185185186" />
         <entry key="app/src/main/res/layout/activity_photo_preview.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_posting_story.xml" value="0.22777777777777777" />
@@ -23,6 +24,9 @@
         <entry key="app/src/main/res/layout/activity_setting.xml" value="0.165625" />
         <entry key="app/src/main/res/layout/activity_sosial_media.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.31614583333333335" />
         <entry key="app/src/main/res/layout/fragment_story.xml" value="0.2388888888888889" />
         <entry key="app/src/main/res/layout/item_cardview_postingan.xml" value="0.31666666666666665" />
         <entry key="app/src/main/res/layout/map.xml" value="0.31666666666666665" />
