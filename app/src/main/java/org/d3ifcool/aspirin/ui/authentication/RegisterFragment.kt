@@ -1,33 +1,42 @@
 package org.d3ifcool.aspirin.ui.authentication
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import org.d3ifcool.aspirin.data.viewmodel.authentication.AuthViewModel
-import org.d3ifcool.aspirin.databinding.ActivityRegisterBinding
-import org.d3ifcool.aspirin.ui.authentication.login.LoginActivity
+import org.d3ifcool.aspirin.databinding.FragmentRegisterBinding
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterFragment : Fragment() {
 
-    private lateinit var binding: ActivityRegisterBinding
+    private lateinit var binding: FragmentRegisterBinding
 
     private val viewModel: AuthViewModel by lazy {
         ViewModelProvider(this).get(AuthViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentRegisterBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         checkEmptyForm()
         checkRegisterStatus()
-
-        binding.haveAccount.setOnClickListener { onBackPressed() }
+        binding.haveAccount.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.buttonRegister.setOnClickListener { registerUser() }
     }
 
@@ -56,17 +65,17 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun checkRegisterStatus() {
-        viewModel.getRegisterStatus().observe(this, { registered ->
+        viewModel.getRegisterStatus().observe(viewLifecycleOwner, { registered ->
             if (registered) {
                 Toast.makeText(
-                    this,
+                    context,
                     "Register Success",
                     Toast.LENGTH_LONG
                 ).show()
-                startActivity(Intent(this, LoginActivity::class.java))
+                findNavController().popBackStack()
             } else {
                 val message = viewModel.getErrMessage()
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
                 binding.progressbar.visibility = View.GONE
             }
         })

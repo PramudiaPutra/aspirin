@@ -17,38 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aspirin" >
         <activity
-            android:name=".ui.camera.PhotoPreviewActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.camera.CameraActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.setting.SettingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.home.sosialmedia.SosialMediaActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.home.sosialmedia.PostingStoryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.authentication.RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.authentication.login.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.SplashScreen"
-            android:exported="true" >
+            android:name=".MainActivity"
+            android:theme="@style/SplashTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true" />
 
         <meta-data
             android:name="preloaded_fonts"

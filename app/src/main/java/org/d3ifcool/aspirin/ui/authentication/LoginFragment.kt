@@ -1,25 +1,25 @@
-package org.d3ifcool.aspirin.ui.authentication.login
+package org.d3ifcool.aspirin.ui.authentication
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.google.firebase.auth.FirebaseUser
+import org.d3ifcool.aspirin.R
 import org.d3ifcool.aspirin.data.viewmodel.authentication.AuthViewModel
-import org.d3ifcool.aspirin.databinding.ActivityLoginBinding
-import org.d3ifcool.aspirin.ui.authentication.RegisterActivity
-import org.d3ifcool.aspirin.ui.home.sosialmedia.SosialMediaActivity
+import org.d3ifcool.aspirin.databinding.FragmentLoginBinding
 
-class LoginActivity : AppCompatActivity() {
+class LoginFragment : Fragment() {
 
-    private lateinit var binding: ActivityLoginBinding
+    private lateinit var binding: FragmentLoginBinding
 
     private val contract = FirebaseAuthUIActivityResultContract()
     private val signInLauncher = registerForActivityResult(contract) {}
@@ -28,28 +28,36 @@ class LoginActivity : AppCompatActivity() {
         ViewModelProvider(this).get(AuthViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentLoginBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         checkEmptyForm()
         checkLoginStatus()
 
         binding.buttonGoogleLogin.setOnClickListener { googleLogin() }
         binding.buttonLogin.setOnClickListener { emailLogin() }
         binding.toRegister.setOnClickListener {
-            startActivity(
-                Intent(this, RegisterActivity::class.java)
+            findNavController().navigate(
+                R.id.action_loginFragment_to_registerFragment
             )
         }
 
-        viewModel.auth.observe(this, { authState(it) })
+        viewModel.auth.observe(viewLifecycleOwner, { authState(it) })
     }
 
     private fun checkEmptyForm() {
         with(binding) {
             buttonLogin.isEnabled = false
             val editTexts = listOf(edtEmail, edtPassword)
+
             for (editText in editTexts) {
                 editText.addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -58,8 +66,8 @@ class LoginActivity : AppCompatActivity() {
                         val edtEmail = edtEmail.text.toString().trim()
                         val edtPassword = edtPassword.text.toString().trim()
 
-                        buttonLogin.isEnabled = (edtEmail.isNotEmpty()
-                                && edtPassword.isNotEmpty())
+                        buttonLogin.isEnabled =
+                            (edtEmail.isNotEmpty() && edtPassword.isNotEmpty())
                     }
 
                     override fun afterTextChanged(p0: Editable?) {}
@@ -70,15 +78,17 @@ class LoginActivity : AppCompatActivity() {
 
     private fun authState(user: FirebaseUser?) {
         if (user != null) {
-            startActivity(Intent(this, SosialMediaActivity::class.java))
+            findNavController().navigate(R.id.action_loginFragment_to_storyFragment)
         }
     }
 
     private fun checkLoginStatus() {
-        viewModel.getLoginStatus().observe(this, { loginSuccess ->
-            if (!loginSuccess) {
+        viewModel.getLoginStatus().observe(viewLifecycleOwner, { loginSuccess ->
+            if (loginSuccess) {
+                findNavController().navigate(R.id.action_loginFragment_to_storyFragment)
+            } else {
                 val message = viewModel.getErrMessage()
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
                 binding.progressbar.visibility = View.GONE
             }
         })

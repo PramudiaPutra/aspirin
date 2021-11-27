@@ -36,4 +36,8 @@
     <string name="judul_kosong">Judul harus diisi</string>
     <string name="deskripsi_kosong">Deskripsi harus diisi</string>
     <string name="lokasi_kosong">Lokasi harus diisi</string>
+    <string name="google_icon">google_icon</string>
+    <string name="exit_button">exit_button</string>
+    <string name="teke_picture">teke_picture</string>
+    <string name="rotate_camera">rotate_camera</string>
 </resources>

@@ -14,11 +14,12 @@ import java.io.File
 class Repo {
     private lateinit var database: DatabaseReference
     private lateinit var storageReference: StorageReference
+    var postingStatus = MutableLiveData<Boolean>()
 
     fun getPostingData(): LiveData<MutableList<PostingData>> {
         val dataMutableList = MutableLiveData<MutableList<PostingData>>()
         database =
-            FirebaseDatabase.getInstance("https://aspirin-aspirasi-indonesia-default-rtdb.asia-southeast1.firebasedatabase.app").reference.child(
+            FirebaseDatabase.getInstance().reference.child(
                 "postingan"
             )
         val list = mutableListOf<PostingData>()
@@ -49,35 +50,42 @@ class Repo {
     ) {
 
         storageReference =
-            Firebase.storage.reference.child("uploads").child("camera/${File(photoUri.path).name}")
-        database =
-            FirebaseDatabase.getInstance("https://aspirin-aspirasi-indonesia-default-rtdb.asia-southeast1.firebasedatabase.app").reference
-        storageReference.putFile(photoUri).addOnSuccessListener {
+            Firebase.storage.reference
+                .child("uploads")
+                .child("camera/${File(photoUri.path).name}")
 
-            storageReference.downloadUrl.addOnSuccessListener { uri ->
-                Log.i("file url", photoUri.toString())
+        database = FirebaseDatabase.getInstance().reference
+        storageReference.putFile(photoUri)
+            .addOnSuccessListener {
 
+                storageReference.downloadUrl
+                    .addOnSuccessListener { uri ->
 
-                val postingData = PostingData(
-                    username,
-                    judul,
-                    lokasi,
-                    deskripsi,
-                    currentDate,
-                    uri.toString()
-                )
+                        val postingData = PostingData(
+                            username,
+                            judul,
+                            lokasi,
+                            deskripsi,
+                            currentDate,
+                            uri.toString()
+                        )
 
-                database.child("postingan").child(database.push().key.toString())
-                    .setValue(postingData)
+                        database.child("postingan")
+                            .child(database.push().key.toString())
+                            .setValue(postingData)
 
+                        postingStatus.postValue(true)
+                    }
+                    .addOnFailureListener {
+                        postingStatus.postValue(false)
+                    }
             }
-        }
-
-
+            .addOnFailureListener {
+                postingStatus.postValue(false)
+            }
     }
 
-//    fun postData(postingData: PostingData){
-//        database = FirebaseDatabase.getInstance("https://aspirin-aspirasi-indonesia-default-rtdb.asia-southeast1.firebasedatabase.app").reference
-//        database.child("postingan").child(database.push().key.toString()).setValue(postingData)
-//    }
+    fun getPostingStatus(): LiveData<Boolean> {
+        return postingStatus
+    }
 }
