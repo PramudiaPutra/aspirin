@@ -26,9 +26,6 @@
             android:name=".ui.setting.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.sosialmedia.SosialMediaActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.home.sosialmedia.PostingStoryActivity"
             android:exported="false" />
 

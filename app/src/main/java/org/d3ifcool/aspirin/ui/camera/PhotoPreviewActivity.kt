@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Toast
 import com.otaliastudios.cameraview.PictureResult
 import org.d3ifcool.aspirin.databinding.ActivityPhotoPreviewBinding
-import org.d3ifcool.aspirin.ui.home.sosialmedia.PostingStoryActivity
 
 class PhotoPreviewActivity : AppCompatActivity() {
 
@@ -21,9 +20,9 @@ class PhotoPreviewActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.confirmPhotoButton.setOnClickListener {
-            startActivity(
-                Intent(this, PostingStoryActivity::class.java)
-            )
+//            startActivity(
+//                Intent(this, PostingStoryActivity::class.java)
+//            )
         }
 
         val result = pictureResult ?: run {

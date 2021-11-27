@@ -78,18 +78,18 @@ class LoginFragment : Fragment() {
 
     private fun authState(user: FirebaseUser?) {
         if (user != null) {
-            Toast.makeText(context, "User telah login", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_loginFragment_to_storyFragment)
         }
     }
 
     private fun checkLoginStatus() {
         viewModel.getLoginStatus().observe(viewLifecycleOwner, { loginSuccess ->
-            if (!loginSuccess) {
+            if (loginSuccess) {
+                findNavController().navigate(R.id.action_loginFragment_to_storyFragment)
+            } else {
                 val message = viewModel.getErrMessage()
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show()
                 binding.progressbar.visibility = View.GONE
-            } else {
-                Toast.makeText(context, "Login berhasil", Toast.LENGTH_SHORT).show()
             }
         })
     }

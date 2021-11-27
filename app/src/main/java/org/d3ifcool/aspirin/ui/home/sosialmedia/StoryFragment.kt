@@ -1,6 +1,6 @@
 package org.d3ifcool.aspirin.ui.home.sosialmedia
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.firebase.ui.auth.AuthUI
 import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingViewModel
 import org.d3ifcool.aspirin.databinding.FragmentStoryBinding
-import org.d3ifcool.aspirin.ui.camera.CameraActivity
 
 
 class StoryFragment : Fragment() {
@@ -25,7 +25,12 @@ class StoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentStoryBinding.inflate(layoutInflater, container, false)
+        binding = FragmentStoryBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         myadapter = SosialMediaAdapter()
         with(binding.recyclerView){
@@ -40,17 +45,18 @@ class StoryFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener {
-            val intent = Intent(context, CameraActivity::class.java)
-            startActivity(intent)
+            AuthUI.getInstance().signOut(requireContext())
+//            val intent = Intent(context, CameraActivity::class.java)
+//            startActivity(intent)
         }
-        return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun observeData(){
         viewModel.fetchPostingData().observe(
             viewLifecycleOwner, {
                 myadapter.setListData(it)
-                myadapter?.notifyDataSetChanged()
+                myadapter.notifyDataSetChanged()
             }
         )
     }
