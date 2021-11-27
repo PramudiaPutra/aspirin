@@ -40,5 +40,18 @@
         android:id="@+id/storyFragment"
         android:name="org.d3ifcool.aspirin.ui.home.sosialmedia.StoryFragment"
         android:label="fragment_story"
-        tools:layout="@layout/fragment_story" />
+        tools:layout="@layout/fragment_story" >
+        <action
+            android:id="@+id/action_storyFragment_to_settingActivity"
+            app:destination="@id/settingActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingActivity"
+        android:name="org.d3ifcool.aspirin.ui.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingActivity_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>

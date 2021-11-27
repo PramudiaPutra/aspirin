@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.AuthUI
+import org.d3ifcool.aspirin.R
 import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingViewModel
 import org.d3ifcool.aspirin.databinding.FragmentStoryBinding
 
@@ -42,6 +44,10 @@ class StoryFragment : Fragment() {
             observeData()
             setHasFixedSize(true)
             adapter = myadapter
+        }
+
+        binding.aspirinIcon.setOnClickListener {
+            findNavController().navigate(R.id.action_storyFragment_to_settingActivity)
         }
 
         binding.fab.setOnClickListener {
