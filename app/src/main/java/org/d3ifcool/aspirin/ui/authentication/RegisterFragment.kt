@@ -72,7 +72,7 @@ class RegisterFragment : Fragment() {
                     "Register Success",
                     Toast.LENGTH_LONG
                 ).show()
-//                startActivity(Intent(this, LoginFragment::class.java))
+                findNavController().popBackStack()
             } else {
                 val message = viewModel.getErrMessage()
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show()
