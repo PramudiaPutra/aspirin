@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_storyFragment_to_settingActivity"
             app:destination="@id/settingActivity" />
+        <action
+            android:id="@+id/action_storyFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingActivity"
@@ -54,4 +57,18 @@
             android:id="@+id/action_settingActivity_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="org.d3ifcool.aspirin.ui.camera.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" >
+        <action
+            android:id="@+id/action_cameraFragment_to_previewFragment"
+            app:destination="@id/previewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/previewFragment"
+        android:name="org.d3ifcool.aspirin.ui.camera.PreviewFragment"
+        android:label="fragment_preview"
+        tools:layout="@layout/fragment_preview" />
 </navigation>

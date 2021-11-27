@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.firebase.ui.auth.AuthUI
 import org.d3ifcool.aspirin.R
 import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingViewModel
 import org.d3ifcool.aspirin.databinding.FragmentStoryBinding
@@ -51,9 +50,7 @@ class StoryFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener {
-            AuthUI.getInstance().signOut(requireContext())
-//            val intent = Intent(context, CameraActivity::class.java)
-//            startActivity(intent)
+            findNavController().navigate(R.id.action_storyFragment_to_cameraFragment)
         }
     }
 

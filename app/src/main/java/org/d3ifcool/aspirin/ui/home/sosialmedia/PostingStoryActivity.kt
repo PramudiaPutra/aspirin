@@ -1,22 +1,6 @@
 package org.d3ifcool.aspirin.ui.home.sosialmedia
 
-import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.view.Gravity
-import androidx.lifecycle.ViewModelProvider
-import org.d3ifcool.aspirin.R
-import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingViewModel
-import java.text.SimpleDateFormat
-import java.util.*
-import android.widget.Toast
-import androidx.core.content.FileProvider
-import com.google.firebase.auth.FirebaseUser
-import com.otaliastudios.cameraview.CameraUtils
-import org.d3ifcool.aspirin.databinding.ActivityPostingStoryBinding
-import org.d3ifcool.aspirin.ui.camera.PhotoPreviewActivity
-import java.io.File
 
 class PostingStoryActivity : AppCompatActivity() {
 

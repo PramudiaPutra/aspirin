@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:background="@color/black"
     android:layout_height="match_parent"
-    tools:context=".ui.camera.PhotoPreviewActivity">
+    tools:context=".ui.camera.PreviewFragment">
 
   <ImageView
       android:id="@+id/photo_preview"

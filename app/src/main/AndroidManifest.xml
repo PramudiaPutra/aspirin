@@ -17,10 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aspirin" >
         <activity
-            android:name=".ui.camera.PhotoPreviewActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.camera.CameraActivity"
+            android:name=".ui.camera.PreviewFragment"
             android:exported="false" />
         <activity
             android:name=".ui.home.sosialmedia.PostingStoryActivity"
