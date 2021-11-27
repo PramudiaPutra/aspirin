@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.otaliastudios.cameraview.PictureResult
+import org.d3ifcool.aspirin.R
 import org.d3ifcool.aspirin.databinding.FragmentPreviewBinding
 
 class PreviewFragment : Fragment() {
@@ -29,6 +31,7 @@ class PreviewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.confirmPhotoButton.setOnClickListener {
+            findNavController().navigate(R.id.action_previewFragment_to_postingFragment)
         }
 
         try {

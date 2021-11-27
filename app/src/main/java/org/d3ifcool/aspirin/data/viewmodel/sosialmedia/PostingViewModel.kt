@@ -16,6 +16,8 @@ class PostingViewModel : ViewModel() {
     val authUser = UserLiveData()
 
     private val repo = Repo()
+    private var postingStatus = repo.getPostingStatus()
+
     fun fetchPostingData(): LiveData<MutableList<PostingData>> {
         val mutableData = MutableLiveData<MutableList<PostingData>>()
         repo.getPostingData().observeForever {
@@ -39,11 +41,7 @@ class PostingViewModel : ViewModel() {
         }
     }
 
-//    fun postData(postingData: PostingData){
-//        viewModelScope.launch {
-//            withContext(Dispatchers.IO){
-//                repo.postData(postingData)
-//            }
-//        }
-//    }
+    fun getPostingStatus(): LiveData<Boolean> {
+        return postingStatus
+    }
 }
