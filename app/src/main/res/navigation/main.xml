@@ -58,6 +58,12 @@
         <action
             android:id="@+id/action_settingActivity_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_settingActivity_to_privasiFragment"
+            app:destination="@id/privasiFragment" />
+        <action
+            android:id="@+id/action_settingActivity_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
@@ -88,4 +94,14 @@
             app:popUpTo="@id/storyFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/privasiFragment"
+        android:name="org.d3ifcool.aspirin.ui.setting.PrivasiFragment"
+        android:label="PrivasiFragment"
+        tools:layout="@layout/fragment_privasi"/>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="org.d3ifcool.aspirin.ui.setting.AboutFragment"
+        android:label="AboutFragment"
+        tools:layout="@layout/fragment_tentang"/>
 </navigation>
