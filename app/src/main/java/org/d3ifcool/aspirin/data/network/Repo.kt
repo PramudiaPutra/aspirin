@@ -25,15 +25,9 @@ class Repo {
             )
         val list = mutableListOf<PostingData>()
 
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
+        database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-//                for (snapshot in dataSnapshot.children) {
-//                    val stories = snapshot.getValue(PostingData::class.java)
-//                    if (stories != null) {
-//                        list.add(stories)
-//                    }
-//                }
                 database.addChildEventListener(object : ChildEventListener {
                     override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                         val stories = snapshot.getValue(PostingData::class.java)
