@@ -25,42 +25,22 @@ class Repo {
             )
         val list = mutableListOf<PostingData>()
 
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-//                for (snapshot in dataSnapshot.children) {
-//                    val stories = snapshot.getValue(PostingData::class.java)
-//                    if (stories != null) {
-//                        list.add(stories)
-//                    }
-//                }
-                database.addChildEventListener(object : ChildEventListener {
-                    override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                        val stories = snapshot.getValue(PostingData::class.java)
-                        if (stories != null) {
-                            list.add(stories)
-                            dataMutableList.value = list
-                        }
-                    }
-
-                    override fun onChildChanged(
-                        snapshot: DataSnapshot,
-                        previousChildName: String?
-                    ) {
-                    }
-
-                    override fun onChildRemoved(snapshot: DataSnapshot) {}
-
-                    override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-
-                    override fun onCancelled(error: DatabaseError) {}
-
-                })
+        database.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val stories = snapshot.getValue(PostingData::class.java)
+                if (stories != null) {
+                    list.add(stories)
+                    dataMutableList.value = list
+                }
             }
 
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {}
-        }
-        )
+
+        })
+
         return dataMutableList
     }
 
