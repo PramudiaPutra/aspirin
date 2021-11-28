@@ -45,6 +45,10 @@ class StoryFragment : Fragment() {
             adapter = myadapter
         }
 
+        binding.tvMenuLokasi.setOnClickListener {
+            findNavController().navigate(R.id.action_storyFragment_to_locationFragment)
+        }
+
         binding.aspirinIcon.setOnClickListener {
             findNavController().navigate(R.id.action_storyFragment_to_settingActivity)
         }
