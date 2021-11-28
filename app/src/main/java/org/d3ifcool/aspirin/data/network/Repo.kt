@@ -23,7 +23,7 @@ class Repo {
                 "postingan"
             )
         val list = mutableListOf<PostingData>()
-        database.addValueEventListener(object : ValueEventListener {
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 for (snapshot in dataSnapshot.children) {
