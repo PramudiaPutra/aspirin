@@ -25,36 +25,22 @@ class Repo {
             )
         val list = mutableListOf<PostingData>()
 
-        database.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                database.addChildEventListener(object : ChildEventListener {
-                    override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                        val stories = snapshot.getValue(PostingData::class.java)
-                        if (stories != null) {
-                            list.add(stories)
-                            dataMutableList.value = list
-                        }
-                    }
-
-                    override fun onChildChanged(
-                        snapshot: DataSnapshot,
-                        previousChildName: String?
-                    ) {
-                    }
-
-                    override fun onChildRemoved(snapshot: DataSnapshot) {}
-
-                    override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-
-                    override fun onCancelled(error: DatabaseError) {}
-
-                })
+        database.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val stories = snapshot.getValue(PostingData::class.java)
+                if (stories != null) {
+                    list.add(stories)
+                    dataMutableList.value = list
+                }
             }
 
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {}
-        }
-        )
+
+        })
+
         return dataMutableList
     }
 
