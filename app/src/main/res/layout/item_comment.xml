@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
+        android:id="@+id/profile_imageComment"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="8dp"
@@ -15,25 +15,26 @@
         tools:src="@drawable/aspirin_main_icon" />
 
     <TextView
-        android:id="@+id/tv_nama_user"
+        android:id="@+id/tv_nama_userComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="@string/akhdan_pangestuaji"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/profile_image"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/profile_imageComment"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_tanggal_posting"
+        android:id="@+id/tv_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="3dp"
-        android:text="@string/hint_tanggal_posting"
-        android:textSize="6sp"
-        app:layout_constraintStart_toEndOf="@id/profile_image"
-        app:layout_constraintTop_toBottomOf="@id/tv_nama_user"/>
+        android:text="Yuk ikut bantuin"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/profile_imageComment"
+        app:layout_constraintTop_toBottomOf="@id/tv_nama_userComment"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
