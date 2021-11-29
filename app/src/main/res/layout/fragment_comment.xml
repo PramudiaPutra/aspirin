@@ -94,6 +94,27 @@
         app:layout_constraintTop_toBottomOf="@id/tv_lokasi"
         tools:listitem="@layout/item_comment" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_field_comment"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Tulis Komen Disisni"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewComment">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tulis Komen Disisni" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
