@@ -41,7 +41,7 @@
     <fragment
         android:id="@+id/storyFragment"
         android:name="org.d3ifcool.aspirin.ui.home.sosialmedia.StoryFragment"
-        android:label="fragment_story"
+        android:label="storyFragment"
         tools:layout="@layout/fragment_story">
         <action
             android:id="@+id/action_storyFragment_to_settingActivity"
@@ -94,7 +94,10 @@
     <fragment
         android:id="@+id/commentFragment"
         android:name="org.d3ifcool.aspirin.ui.home.comment.CommentFragment"
-        android:label="fragment_comment"
-        tools:layout="@layout/fragment_comment" >
+        android:label="{posting}"
+        tools:layout="@layout/fragment_comment">
+        <argument
+            android:name="posting"
+            app:argType="org.d3ifcool.aspirin.data.model.sosialmedia.PostingData" />
     </fragment>
 </navigation>

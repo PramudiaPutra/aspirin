@@ -49,7 +49,9 @@ class StoryFragment : Fragment() {
 
         myadapter.setOnItemClickCallback(object : SosialMediaAdapter.OnItemClickCallback {
             override fun onItemClicked(data: PostingData) {
-                findNavController().navigate(R.id.action_storyFragment_to_commentFragment)
+                findNavController().navigate(
+                    StoryFragmentDirections.actionStoryFragmentToCommentFragment(data)
+                )
             }
         }
         )
