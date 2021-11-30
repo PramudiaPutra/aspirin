@@ -1,8 +1,16 @@
 package org.d3ifcool.aspirin.ui.home.sosialmedia
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
+import android.os.Looper
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +18,15 @@ import androidx.lifecycle.ViewModelProvider
 import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingViewModel
 import java.util.*
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.firebase.auth.FirebaseUser
 import com.otaliastudios.cameraview.CameraUtils
 import org.d3ifcool.aspirin.R
@@ -20,15 +34,33 @@ import org.d3ifcool.aspirin.databinding.FragmentPostingBinding
 import org.d3ifcool.aspirin.ui.camera.PreviewFragment
 import java.io.File
 import java.text.SimpleDateFormat
+import com.google.android.gms.location.*
+import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class PostingFragment : Fragment() {
 
     private lateinit var photoUri: Uri
     private lateinit var username: String
+    private lateinit var permissionRequest: ActivityResultLauncher<String>
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    companion object {
+        var locationGranted = false
+        var locationEnabled = false
+        var lat: Double? = null
+        var long: Double? = null
+    }
 
     private lateinit var binding: FragmentPostingBinding
     private val viewModel: PostingViewModel by lazy {
         ViewModelProvider(this).get(PostingViewModel::class.java)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requestLocationPermission()
     }
 
     override fun onCreateView(
@@ -43,18 +75,133 @@ class PostingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkPostingStatus()
-        binding.btnKirimKegiatan.setOnClickListener { posting() }
+        shareLocation()
+        showImage()
 
-        try {
-            PreviewFragment.pictureResult?.toBitmap(
-                1000,
-                1000
-            ) { bitmap -> binding.imgAddPosting.setImageBitmap(bitmap) }
-        } catch (e: Exception) {
-            Toast.makeText(context, "preview error $e", Toast.LENGTH_LONG).show()
+        binding.btnKirimKegiatan.setOnClickListener { posting() }
+        binding.btnEnableLocation.setOnClickListener {
+            enableLocation()
+            viewModel.getLocationStatus().observe(viewLifecycleOwner, { getLocation ->
+                if (getLocation) {
+                    binding.progressbar.visibility = View.GONE
+                }
+            })
+        }
+
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.map_fragment) as? SupportMapFragment
+        mapFragment?.getMapAsync {
         }
 
         viewModel.authUser.observe(viewLifecycleOwner, { getCurrentUser(it) })
+    }
+
+    private fun shareLocation() {
+        binding.switchShareLocation.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.mapFrame.visibility = View.VISIBLE
+            } else {
+                binding.mapFrame.visibility = View.GONE
+            }
+        }
+
+    }
+
+    private fun enableLocation() {
+        if (!locationGranted) {
+            AlertDialog.Builder(context)
+                .setTitle("Akses Lokasi")
+                .setMessage("Izinkan pengunaan akses lokasi untuk mempermudah pencarian lokasi anda")
+                .setPositiveButton(
+                    "Ok"
+                ) { _, _ ->
+                    binding.progressbar.visibility = View.VISIBLE
+                    permissionRequest.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                }
+                .setNegativeButton(
+                    "Tolak"
+                ) { _, _ -> }
+                .show()
+        }
+        binding.progressbar.visibility = View.VISIBLE
+        checkLocationService()
+    }
+
+    private fun checkLocationService() {
+        val locationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        locationEnabled = try {
+            locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        } catch (e: Exception) {
+            false
+        }
+
+        if (!locationEnabled) {
+            AlertDialog.Builder(context)
+                .setMessage("Nyalakan lokasi perangkat untuk mendapatkan lokasi")
+                .setPositiveButton(
+                    "Ok"
+                ) { _, _ ->
+                    requireContext().startActivity(
+                        Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    )
+                }
+                .setNegativeButton("Tolak", null)
+                .show()
+        }
+    }
+
+    private fun requestLocationPermission() {
+        permissionRequest =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+                if (isGranted) {
+                    locationGranted = true
+                    getMyLocation()
+                } else {
+                    locationGranted = false
+                }
+            }
+
+        when (PackageManager.PERMISSION_GRANTED) {
+            context?.let {
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            } -> {
+                locationGranted = true
+                getMyLocation()
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getMyLocation() {
+        val mLocationRequest = viewModel.getLocationRequest()
+        val mLocationCallback = viewModel.getLocationCallback()
+
+        LocationServices.getFusedLocationProviderClient(requireContext())
+            .requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.getMainLooper())
+
+        fusedLocationClient = LocationServices
+            .getFusedLocationProviderClient(requireContext())
+
+        lifecycleScope.launch {
+            viewModel.getLocationStatus().asFlow().collectLatest { getLocation ->
+                if (getLocation) {
+                    fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                        lat = location.latitude
+                        long = location.longitude
+                        Toast.makeText(
+                            context,
+                            "lat: $lat  long: $long",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
     }
 
     private fun checkPostingStatus() {
@@ -78,18 +225,6 @@ class PostingFragment : Fragment() {
 
         val sdf = SimpleDateFormat("dd/M/yyyy", Locale.getDefault())
         val currentDate = sdf.format(Date())
-
-        if (binding.edtJudulKegiatan.text.isEmpty()) {
-            showMessage(R.string.judul_kosong)
-        }
-
-        if (binding.edtDeskripsiKegiatan.text.isEmpty()) {
-            showMessage(R.string.lokasi_kosong)
-        }
-
-        if (binding.edtLokasiKegiatan.text.isEmpty()) {
-            showMessage(R.string.lokasi_kosong)
-        }
 
         val judul = binding.edtJudulKegiatan.text.toString()
         val deskripsi = binding.edtDeskripsiKegiatan.text.toString()
@@ -116,10 +251,14 @@ class PostingFragment : Fragment() {
         }
     }
 
-    private fun showMessage(messageResId: Int) {
-        Toast.makeText(context, messageResId, Toast.LENGTH_LONG).apply {
-            setGravity(Gravity.CENTER, 0, 0)
-            show()
+    private fun showImage() {
+        try {
+            PreviewFragment.pictureResult?.toBitmap(
+                1000,
+                1000
+            ) { bitmap -> binding.imgAddPosting.setImageBitmap(bitmap) }
+        } catch (e: Exception) {
+            Toast.makeText(context, "preview error $e", Toast.LENGTH_LONG).show()
         }
     }
 }
