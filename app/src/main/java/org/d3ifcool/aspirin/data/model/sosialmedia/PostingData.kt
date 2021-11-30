@@ -1,7 +1,10 @@
 package org.d3ifcool.aspirin.data.model.sosialmedia
 
+import android.os.Parcelable
 import org.d3ifcool.aspirin.data.model.comment.Comment
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class PostingData(
     val username: String? = null,
     val judulPosting: String? = null,
@@ -9,4 +12,4 @@ data class PostingData(
     val deskripsiPosting: String? = null,
     val tanggalPosting: String? = null,
     val photoUrl: String? = null,
-)
+): Parcelable
