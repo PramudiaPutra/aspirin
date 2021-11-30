@@ -2,6 +2,7 @@ package org.d3ifcool.aspirin.ui.home.sosialmedia
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -14,6 +15,13 @@ class SosialMediaAdapter : RecyclerView.Adapter<SosialMediaAdapter.ViewHolder>()
     fun setListData(data:MutableList<PostingData>){
         listData = data
     }
+
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -26,6 +34,10 @@ class SosialMediaAdapter : RecyclerView.Adapter<SosialMediaAdapter.ViewHolder>()
     override fun onBindViewHolder(holder: SosialMediaAdapter.ViewHolder, position: Int) {
         val data = listData[position]
         holder.bind(data)
+        holder.itemView.setOnClickListener {
+            onItemClickCallback.onItemClicked(data)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -49,7 +61,13 @@ class SosialMediaAdapter : RecyclerView.Adapter<SosialMediaAdapter.ViewHolder>()
                 .applyDefaultRequestOptions(requestOption)
                 .load(dataPosting.photoUrl)
                 .into(imgPosting)
+
+
         }
+    }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: PostingData)
     }
 
 }
