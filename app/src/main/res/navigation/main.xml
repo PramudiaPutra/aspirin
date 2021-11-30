@@ -42,7 +42,7 @@
         android:id="@+id/storyFragment"
         android:name="org.d3ifcool.aspirin.ui.home.sosialmedia.StoryFragment"
         android:label="fragment_story"
-        tools:layout="@layout/fragment_story" >
+        tools:layout="@layout/fragment_story">
         <action
             android:id="@+id/action_storyFragment_to_settingActivity"
             app:destination="@id/settingActivity" />
