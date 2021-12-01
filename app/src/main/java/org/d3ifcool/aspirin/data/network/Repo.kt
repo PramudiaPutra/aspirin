@@ -1,5 +1,6 @@
 package org.d3ifcool.aspirin.data.network
 
+import androidx.core.net.toUri
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +8,7 @@ import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import org.d3ifcool.aspirin.data.model.sosialmedia.MapData
 import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import java.io.File
 import com.google.firebase.database.DataSnapshot
@@ -44,49 +46,71 @@ class Repo {
         return dataMutableList
     }
 
+    fun getMapData(): LiveData<MutableList<MapData>> {
+        val mapData = MutableLiveData<MutableList<MapData>>()
+        val mapList = mutableListOf<MapData>()
+
+        database = FirebaseDatabase.getInstance().reference.child(
+            "location"
+        )
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (snapshot in dataSnapshot.children) {
+                    val mapSnapshot = snapshot.getValue(MapData::class.java)
+                    if (mapSnapshot != null) {
+                        mapSnapshot.key = snapshot.key
+                        mapList.add(mapSnapshot)
+                    }
+                }
+                mapData.value = mapList
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
+        return mapData
+    }
+
     fun postData(
-        username: String,
-        judul: String,
-        lokasi: String,
-        deskripsi: String,
-        currentDate: String,
-        photoUri: Uri
+        postingData: PostingData,
+        mapData: MapData?,
     ) {
 
         storageReference =
             Firebase.storage.reference
                 .child("uploads")
-                .child("camera/${File(photoUri.path).name}")
+                .child("camera/${File(postingData.photoUrl).name}")
 
         database = FirebaseDatabase.getInstance().reference
-        storageReference.putFile(photoUri)
-            .addOnSuccessListener {
+        val pushKey = database.push().key.toString()
+        postingData.photoUrl?.let {
+            storageReference.putFile(it.toUri())
+                .addOnSuccessListener {
 
-                storageReference.downloadUrl
-                    .addOnSuccessListener { uri ->
+                    storageReference.downloadUrl
+                        .addOnSuccessListener { uri ->
+                            postingData.photoUrl = uri.toString()
 
-                        val postingData = PostingData(
-                            username,
-                            judul,
-                            lokasi,
-                            deskripsi,
-                            currentDate,
-                            uri.toString()
-                        )
+                            database.child("postingan")
+                                .child(pushKey)
+                                .setValue(postingData)
 
-                        database.child("postingan")
-                            .child(database.push().key.toString())
-                            .setValue(postingData)
+                            if (mapData != null) {
+                                database.child("location")
+                                    .child(pushKey)
+                                    .setValue(mapData)
+                            }
 
-                        postingStatus.postValue(true)
-                    }
-                    .addOnFailureListener {
-                        postingStatus.postValue(false)
-                    }
-            }
-            .addOnFailureListener {
-                postingStatus.postValue(false)
-            }
+                            postingStatus.postValue(true)
+                        }
+                        .addOnFailureListener {
+                            postingStatus.postValue(false)
+                        }
+                }
+                .addOnFailureListener {
+                    postingStatus.postValue(false)
+                }
+        }
     }
 
     fun getPostingStatus(): LiveData<Boolean> {
