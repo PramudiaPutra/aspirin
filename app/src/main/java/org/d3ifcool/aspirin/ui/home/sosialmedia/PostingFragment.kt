@@ -11,7 +11,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
@@ -81,10 +84,12 @@ class PostingFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkLocationServiceInitial()
         checkPostingStatus()
+        checkEmptyForm()
         shareLocation()
         displayMaps()
         showImage()
@@ -93,22 +98,39 @@ class PostingFragment : Fragment() {
             posting()
         }
 
+        binding.edtDeskripsiKegiatan.setOnTouchListener { view, event ->
+            view.parent.requestDisallowInterceptTouchEvent(true)
+            if ((event.action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                view.parent.requestDisallowInterceptTouchEvent(false)
+            }
+            return@setOnTouchListener false
+        }
+
+
         viewModel.authUser.observe(viewLifecycleOwner, { getCurrentUser(it) })
     }
 
     private fun displayMaps() {
         val mapFragment =
-            childFragmentManager.findFragmentById(R.id.map_fragment) as? SupportMapFragment
+            childFragmentManager.findFragmentById(R.id.map_fragment) as? MapFragment
+
+        mapFragment.let {
+            if (it != null) {
+                it.listener = object : MapFragment.OnTouchListener{
+                    override fun onTouch() {
+                        binding.scrollView.requestDisallowInterceptTouchEvent(true)
+                    }
+
+                }
+            }
+        }
 
         mapFragment?.getMapAsync { googleMap ->
-
             googleMap.setOnCameraMoveStartedListener {
                 currentLocation = googleMap.cameraPosition.target
                 if (currentLocation != null) {
                     lat = currentLocation!!.latitude
                     lon = currentLocation!!.longitude
-                    Toast.makeText(context, "camera lat: $lat, long: $lon", Toast.LENGTH_SHORT)
-                        .show()
                 }
             }
 
@@ -275,11 +297,6 @@ class PostingFragment : Fragment() {
                     fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                         lat = location.latitude
                         lon = location.longitude
-                        Toast.makeText(
-                            context,
-                            "lat: $lat  long: $lon",
-                            Toast.LENGTH_SHORT
-                        ).show()
                         lifecycleScope.cancel()
                     }
                 }
@@ -324,7 +341,7 @@ class PostingFragment : Fragment() {
                 val context = requireContext()
                 photoUri =
                     FileProvider.getUriForFile(context, context.packageName + ".provider", file)
-                
+
                 val postingData = PostingData(
                     username,
                     judul,
@@ -359,6 +376,30 @@ class PostingFragment : Fragment() {
             ) { bitmap -> binding.imgAddPosting.setImageBitmap(bitmap) }
         } catch (e: Exception) {
             Toast.makeText(context, "preview error $e", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun checkEmptyForm() {
+        with(binding) {
+            btnKirimKegiatan.isEnabled = false
+            val editTexts = listOf(edtJudulKegiatan, edtDeskripsiKegiatan, edtLokasiKegiatan)
+            for (editText in editTexts) {
+                editText.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        val edtJudulKegiatan = edtJudulKegiatan.text.toString().trim()
+                        val edtDeskripsiKegiatan = edtDeskripsiKegiatan.text.toString().trim()
+                        val edtLokasiKegiatan = edtLokasiKegiatan.text.toString().trim()
+
+                        btnKirimKegiatan.isEnabled = (edtJudulKegiatan.isNotEmpty()
+                                && edtDeskripsiKegiatan.isNotEmpty()
+                                && edtLokasiKegiatan.isNotEmpty())
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {}
+                })
+            }
         }
     }
 }
