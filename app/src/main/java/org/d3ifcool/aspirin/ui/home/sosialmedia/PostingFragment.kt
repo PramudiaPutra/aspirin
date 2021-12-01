@@ -101,7 +101,7 @@ class PostingFragment : Fragment() {
             "${System.currentTimeMillis()}_${UUID.randomUUID()}.jpg"
         )
 
-        val comment = listOf(Comment("",0,"",""))
+        val comment = listOf(Comment("123",0,"Akhdan","Iyaa"))
 
         CameraUtils.writeToFile(PreviewFragment.pictureResult!!.data, file) {
             if (it != null) {

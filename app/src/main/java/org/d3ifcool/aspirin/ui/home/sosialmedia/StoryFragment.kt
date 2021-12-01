@@ -64,10 +64,6 @@ class StoryFragment : Fragment() {
         }
     }
 
-    private fun showSelectedHero(data: PostingData) {
-        Toast.makeText(context, "Kamu memilih " + data.deskripsiPosting, Toast.LENGTH_SHORT).show()
-    }
-
     @SuppressLint("NotifyDataSetChanged")
     private fun observeData() {
         viewModel.fetchPostingData().observe(

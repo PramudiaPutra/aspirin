@@ -12,11 +12,13 @@ import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.aspirin.data.model.comment.Comment
 import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import java.io.File
+import java.util.*
 
 class Repo {
 
-    val user = FirebaseAuth.getInstance().currentUser
     private lateinit var database: DatabaseReference
+    val user = FirebaseAuth.getInstance().currentUser
+    private lateinit var groupId: String
     private lateinit var storageReference: StorageReference
 
     var postingStatus = MutableLiveData<Boolean>()
@@ -78,7 +80,8 @@ class Repo {
                         )
 
                         database.child("postingan")
-                            .child(database.push().key.toString())
+//                            .child(database.push().key.toString())
+                            .child(UUID.randomUUID().toString())
                             .setValue(postingData)
 
                         postingStatus.postValue(true)
@@ -98,9 +101,12 @@ class Repo {
 
     fun getComments(): LiveData<MutableList<Comment>> {
         val dataMutableList = MutableLiveData<MutableList<Comment>>()
-        if (user != null) {
-            database = FirebaseDatabase.getInstance().reference.child("postingan").child(user.uid).child("comments")
-        }
+
+        Log.d("IDKU",UUID.randomUUID().toString() )
+        database = FirebaseDatabase.getInstance().reference.child(
+            "postingan"
+        ).child(UUID.randomUUID().toString()).child("comments")
+
         val list = mutableListOf<Comment>()
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {

@@ -8,11 +8,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import org.d3ifcool.aspirin.R
 import org.d3ifcool.aspirin.data.model.comment.Comment
+import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import org.d3ifcool.aspirin.databinding.ItemCardviewPostinganBinding
 import org.d3ifcool.aspirin.databinding.ItemCommentBinding
 
-class CommentAdapter(private val listComment: ArrayList<Comment>) : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
-
+//class CommentAdapter(private val listComment: ArrayList<Comment>) : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
+class CommentAdapter() : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
+    private var listComment = mutableListOf<Comment>()
+    fun setListData(data:MutableList<Comment>){
+        listComment = data
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemCommentBinding.inflate(inflater, parent, false)
@@ -33,7 +38,6 @@ class CommentAdapter(private val listComment: ArrayList<Comment>) : RecyclerView
             Glide.with(profileImageComment.context).load(data.photoUser).into(profileImageComment)
             tvNamaUserComment.text = data.username
             tvMessage.text = data.commentContent
-
         }
 
     }
