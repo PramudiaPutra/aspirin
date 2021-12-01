@@ -46,7 +46,9 @@ class Repo {
         lokasi: String,
         deskripsi: String,
         currentDate: String,
-        photoUri: Uri
+        photoUri: Uri,
+        lat: Double?,
+        lon: Double?
     ) {
 
         storageReference =
@@ -67,7 +69,9 @@ class Repo {
                             lokasi,
                             deskripsi,
                             currentDate,
-                            uri.toString()
+                            uri.toString(),
+                            lat,
+                            lon
                         )
 
                         database.child("postingan")

@@ -38,11 +38,13 @@ class PostingViewModel : ViewModel() {
         lokasi: String,
         deskripsi: String,
         currentDate: String,
-        photoUri: Uri
+        photoUri: Uri,
+        lat: Double?,
+        lon: Double?
     ) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                repo.postData(username, judul, lokasi, deskripsi, currentDate, photoUri)
+                repo.postData(username, judul, lokasi, deskripsi, currentDate, photoUri, lat, lon)
             }
         }
     }

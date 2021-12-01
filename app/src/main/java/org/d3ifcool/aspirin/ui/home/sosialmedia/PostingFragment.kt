@@ -54,9 +54,10 @@ class PostingFragment : Fragment() {
     companion object {
         var locationGranted = false
         var locationEnabled = false
+        var shareLocation = false
         var lat: Double? = null
-        var long: Double? = null
-        var coordinate: LatLng? = null
+        var lon: Double? = null
+        var currentLocation: LatLng? = null
     }
 
     private lateinit var binding: FragmentPostingBinding
@@ -85,12 +86,25 @@ class PostingFragment : Fragment() {
         shareLocation()
         showImage()
 
-        binding.btnKirimKegiatan.setOnClickListener { posting() }
+        binding.btnKirimKegiatan.setOnClickListener {
+            posting()
+        }
 
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.map_fragment) as? SupportMapFragment
 
         mapFragment?.getMapAsync { googleMap ->
+
+            googleMap.setOnCameraMoveStartedListener {
+                currentLocation = googleMap.cameraPosition.target
+                if (currentLocation != null) {
+                    lat = currentLocation!!.latitude
+                    lon = currentLocation!!.longitude
+                    Toast.makeText(context, "camera lat: $lat, long: $lon", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
             val defaultJakarta = LatLng(-6.200000, 106.816666)
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultJakarta, 8f))
 
@@ -123,7 +137,6 @@ class PostingFragment : Fragment() {
         coordinateObserver.observeOnce(viewLifecycleOwner, { getCoordinate ->
             if (getCoordinate != null) {
                 binding.mapProgressbar.visibility = View.GONE
-                coordinate = getCoordinate
                 googleMap.moveCamera(
                     CameraUpdateFactory.newLatLngZoom(
                         viewModel.locationCoordinate.value!!,
@@ -138,8 +151,10 @@ class PostingFragment : Fragment() {
         binding.switchShareLocation.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 binding.mapFrame.visibility = View.VISIBLE
+                shareLocation = true
             } else {
                 binding.mapFrame.visibility = View.GONE
+                shareLocation = false
             }
         }
 
@@ -254,10 +269,10 @@ class PostingFragment : Fragment() {
                 if (getLocation) {
                     fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                         lat = location.latitude
-                        long = location.longitude
+                        lon = location.longitude
                         Toast.makeText(
                             context,
-                            "lat: $lat  long: $long",
+                            "lat: $lat  long: $lon",
                             Toast.LENGTH_SHORT
                         ).show()
                         lifecycleScope.cancel()
@@ -303,7 +318,12 @@ class PostingFragment : Fragment() {
                 val context = requireContext()
                 photoUri =
                     FileProvider.getUriForFile(context, context.packageName + ".provider", file)
-                viewModel.postData(username, judul, lokasi, deskripsi, currentDate, photoUri)
+                if (shareLocation) {
+                    viewModel.postData(username, judul, lokasi, deskripsi, currentDate, photoUri, lat, lon)
+                } else {
+                    viewModel.postData(username, judul, lokasi, deskripsi, currentDate, photoUri, null, null)
+                }
+                
             } else {
                 Toast.makeText(
                     context,
