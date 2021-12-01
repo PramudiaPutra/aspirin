@@ -42,4 +42,5 @@
     <string name="rotate_camera">rotate_camera</string>
     <string name="my_location_button">my_location_button</string>
     <string name="enable_location_button">enable_location_button</string>
+    <string name="icon_location">icon_location</string>
 </resources>

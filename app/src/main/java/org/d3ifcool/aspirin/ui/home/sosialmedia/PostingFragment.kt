@@ -91,6 +91,9 @@ class PostingFragment : Fragment() {
             childFragmentManager.findFragmentById(R.id.map_fragment) as? SupportMapFragment
 
         mapFragment?.getMapAsync { googleMap ->
+            val defaultJakarta = LatLng(-6.200000, 106.816666)
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultJakarta, 8f))
+
             binding.btnEnableLocation.setOnClickListener {
                 binding.btnEnableLocation.visibility = View.GONE
                 binding.btnGetLocation.visibility = View.VISIBLE
