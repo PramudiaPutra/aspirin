@@ -3,6 +3,13 @@ package org.d3ifcool.aspirin.data.model.comment
 import org.d3ifcool.aspirin.R
 
 object CommentData {
+    private val userId = arrayOf(
+        "id1",
+        "id2",
+        "id3",
+        "id4",
+        "id5"
+    )
     private val photoUser = intArrayOf(
         R.drawable.aspirin_main_icon,
         R.drawable.aspirin_main_icon,
@@ -31,6 +38,7 @@ object CommentData {
             val list = arrayListOf<Comment>()
             for (position in photoUser.indices) {
                 val comment = Comment()
+                comment.userId = userId[position]
                 comment.photoUser = photoUser[position]
                 comment.username = userName[position]
                 comment.commentContent = contentComment[position]
