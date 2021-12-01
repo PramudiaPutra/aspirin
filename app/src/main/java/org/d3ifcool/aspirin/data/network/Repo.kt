@@ -1,13 +1,13 @@
 package org.d3ifcool.aspirin.data.network
 
-import android.net.Uri
-import android.util.Log
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import org.d3ifcool.aspirin.data.model.sosialmedia.MapData
 import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import java.io.File
 
@@ -41,52 +41,44 @@ class Repo {
     }
 
     fun postData(
-        username: String,
-        judul: String,
-        lokasi: String,
-        deskripsi: String,
-        currentDate: String,
-        photoUri: Uri,
-        lat: Double?,
-        lon: Double?
+        postingData: PostingData,
+        mapData: MapData?,
     ) {
 
         storageReference =
             Firebase.storage.reference
                 .child("uploads")
-                .child("camera/${File(photoUri.path).name}")
+                .child("camera/${File(postingData.photoUrl).name}")
 
         database = FirebaseDatabase.getInstance().reference
-        storageReference.putFile(photoUri)
-            .addOnSuccessListener {
+        val pushKey = database.push().key.toString()
+        postingData.photoUrl?.let {
+            storageReference.putFile(it.toUri())
+                .addOnSuccessListener {
 
-                storageReference.downloadUrl
-                    .addOnSuccessListener { uri ->
+                    storageReference.downloadUrl
+                        .addOnSuccessListener { uri ->
 
-                        val postingData = PostingData(
-                            username,
-                            judul,
-                            lokasi,
-                            deskripsi,
-                            currentDate,
-                            uri.toString(),
-                            lat,
-                            lon
-                        )
+                            database.child("postingan")
+                                .child(pushKey)
+                                .setValue(postingData)
 
-                        database.child("postingan")
-                            .child(database.push().key.toString())
-                            .setValue(postingData)
+                            if (mapData != null) {
+                                database.child("location")
+                                    .child(pushKey)
+                                    .setValue(mapData)
+                            }
 
-                        postingStatus.postValue(true)
-                    }
-                    .addOnFailureListener {
-                        postingStatus.postValue(false)
-                    }
-            }
-            .addOnFailureListener {
-                postingStatus.postValue(false)
-            }
+                            postingStatus.postValue(true)
+                        }
+                        .addOnFailureListener {
+                            postingStatus.postValue(false)
+                        }
+                }
+                .addOnFailureListener {
+                    postingStatus.postValue(false)
+                }
+        }
     }
 
     fun getPostingStatus(): LiveData<Boolean> {

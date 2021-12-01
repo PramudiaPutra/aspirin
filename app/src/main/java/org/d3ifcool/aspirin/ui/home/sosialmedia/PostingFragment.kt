@@ -42,6 +42,8 @@ import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.d3ifcool.aspirin.data.model.sosialmedia.MapData
+import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import org.d3ifcool.aspirin.utils.observeOnce
 
 class PostingFragment : Fragment() {
@@ -84,12 +86,17 @@ class PostingFragment : Fragment() {
         checkLocationServiceInitial()
         checkPostingStatus()
         shareLocation()
+        displayMaps()
         showImage()
 
         binding.btnKirimKegiatan.setOnClickListener {
             posting()
         }
 
+        viewModel.authUser.observe(viewLifecycleOwner, { getCurrentUser(it) })
+    }
+
+    private fun displayMaps() {
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.map_fragment) as? SupportMapFragment
 
@@ -124,12 +131,10 @@ class PostingFragment : Fragment() {
 
             binding.btnGetLocation.setOnClickListener {
                 binding.mapProgressbar.visibility = View.VISIBLE
-
                 observeLocation(googleMap)
+                getMyLocation()
             }
         }
-
-        viewModel.authUser.observe(viewLifecycleOwner, { getCurrentUser(it) })
     }
 
     private fun observeLocation(googleMap: GoogleMap) {
@@ -315,15 +320,27 @@ class PostingFragment : Fragment() {
 
         CameraUtils.writeToFile(PreviewFragment.pictureResult!!.data, file) {
             if (it != null) {
+
                 val context = requireContext()
                 photoUri =
                     FileProvider.getUriForFile(context, context.packageName + ".provider", file)
-                if (shareLocation) {
-                    viewModel.postData(username, judul, lokasi, deskripsi, currentDate, photoUri, lat, lon)
-                } else {
-                    viewModel.postData(username, judul, lokasi, deskripsi, currentDate, photoUri, null, null)
-                }
                 
+                val postingData = PostingData(
+                    username,
+                    judul,
+                    lokasi,
+                    deskripsi,
+                    currentDate,
+                    photoUri.toString()
+                )
+                if (shareLocation) {
+
+                    val locationData = MapData(null, judul, lat, lon)
+                    viewModel.postData(postingData, locationData)
+                } else {
+                    viewModel.postData(postingData, null)
+                }
+
             } else {
                 Toast.makeText(
                     context,

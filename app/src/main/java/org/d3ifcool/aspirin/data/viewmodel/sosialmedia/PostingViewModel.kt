@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.d3ifcool.aspirin.data.model.sosialmedia.MapData
 import org.d3ifcool.aspirin.data.viewmodel.authentication.UserLiveData
 import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import org.d3ifcool.aspirin.data.network.Repo
@@ -33,25 +34,19 @@ class PostingViewModel : ViewModel() {
     }
 
     fun postData(
-        username: String,
-        judul: String,
-        lokasi: String,
-        deskripsi: String,
-        currentDate: String,
-        photoUri: Uri,
-        lat: Double?,
-        lon: Double?
+        postingData: PostingData,
+        mapData: MapData?
     ) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                repo.postData(username, judul, lokasi, deskripsi, currentDate, photoUri, lat, lon)
+                repo.postData(postingData, mapData)
             }
         }
     }
 
     fun getLocationRequest(): LocationRequest {
         val mLocationRequest = LocationRequest.create()
-        mLocationRequest.interval = 10000
+        mLocationRequest.interval = 5000
         mLocationRequest.fastestInterval = 500
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
