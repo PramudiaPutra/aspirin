@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,6 +22,7 @@ class PostingViewModel : ViewModel() {
     private val repo = Repo()
     private var postingStatus = repo.getPostingStatus()
     val locationStatus = MutableLiveData<Boolean>()
+    val locationCoordinate = MutableLiveData<LatLng>()
 
     fun fetchPostingData(): LiveData<MutableList<PostingData>> {
         val mutableData = MutableLiveData<MutableList<PostingData>>()
@@ -60,6 +62,7 @@ class PostingViewModel : ViewModel() {
                 for (location in locationResult.locations) {
                     if (location != null) {
                         locationStatus.postValue(true)
+                        locationCoordinate.postValue(LatLng(location.latitude, location.longitude))
                     } else {
                         locationStatus.postValue(false)
                     }
@@ -75,5 +78,9 @@ class PostingViewModel : ViewModel() {
 
     fun getLocationStatus(): LiveData<Boolean> {
         return locationStatus
+    }
+
+    fun getCoordinate(): LiveData<LatLng> {
+        return locationCoordinate
     }
 }

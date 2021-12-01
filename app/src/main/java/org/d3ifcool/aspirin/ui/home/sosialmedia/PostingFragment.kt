@@ -36,8 +36,13 @@ import java.io.File
 import java.text.SimpleDateFormat
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.d3ifcool.aspirin.utils.observeOnce
 
 class PostingFragment : Fragment() {
 
@@ -51,6 +56,7 @@ class PostingFragment : Fragment() {
         var locationEnabled = false
         var lat: Double? = null
         var long: Double? = null
+        var coordinate: LatLng? = null
     }
 
     private lateinit var binding: FragmentPostingBinding
@@ -74,26 +80,55 @@ class PostingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkLocationServiceInitial()
         checkPostingStatus()
         shareLocation()
         showImage()
 
         binding.btnKirimKegiatan.setOnClickListener { posting() }
-        binding.btnEnableLocation.setOnClickListener {
-            enableLocation()
-            viewModel.getLocationStatus().observe(viewLifecycleOwner, { getLocation ->
-                if (getLocation) {
-                    binding.progressbar.visibility = View.GONE
-                }
-            })
-        }
 
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.map_fragment) as? SupportMapFragment
-        mapFragment?.getMapAsync {
+
+        mapFragment?.getMapAsync { googleMap ->
+            binding.btnEnableLocation.setOnClickListener {
+                binding.btnEnableLocation.visibility = View.GONE
+                binding.btnGetLocation.visibility = View.VISIBLE
+
+                enableLocation()
+                observeLocation(googleMap)
+
+                viewModel.getLocationStatus().observe(viewLifecycleOwner, { getLocation ->
+                    if (getLocation) {
+                        binding.mapProgressbar.visibility = View.GONE
+                    }
+                })
+            }
+
+            binding.btnGetLocation.setOnClickListener {
+                binding.mapProgressbar.visibility = View.VISIBLE
+
+                observeLocation(googleMap)
+            }
         }
 
         viewModel.authUser.observe(viewLifecycleOwner, { getCurrentUser(it) })
+    }
+
+    private fun observeLocation(googleMap: GoogleMap) {
+        val coordinateObserver = viewModel.getCoordinate()
+        coordinateObserver.observeOnce(viewLifecycleOwner, { getCoordinate ->
+            if (getCoordinate != null) {
+                binding.mapProgressbar.visibility = View.GONE
+                coordinate = getCoordinate
+                googleMap.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        viewModel.locationCoordinate.value!!,
+                        14f
+                    )
+                )
+            }
+        })
     }
 
     private fun shareLocation() {
@@ -110,21 +145,40 @@ class PostingFragment : Fragment() {
     private fun enableLocation() {
         if (!locationGranted) {
             AlertDialog.Builder(context)
-                .setTitle("Akses Lokasi")
+                .setTitle("Layanan Lokasi")
                 .setMessage("Izinkan pengunaan akses lokasi untuk mempermudah pencarian lokasi anda")
                 .setPositiveButton(
                     "Ok"
                 ) { _, _ ->
-                    binding.progressbar.visibility = View.VISIBLE
                     permissionRequest.launch(Manifest.permission.ACCESS_FINE_LOCATION)
                 }
                 .setNegativeButton(
                     "Tolak"
-                ) { _, _ -> }
+                ) { _, _ ->
+                    binding.btnEnableLocation.visibility = View.VISIBLE
+                    binding.btnGetLocation.visibility = View.GONE
+                    binding.mapProgressbar.visibility = View.GONE
+                }
                 .show()
         }
-        binding.progressbar.visibility = View.VISIBLE
         checkLocationService()
+    }
+
+
+    private fun checkLocationServiceInitial() {
+        val locationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        locationEnabled = try {
+            locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        } catch (e: Exception) {
+            false
+        }
+
+        if (locationEnabled && locationGranted) {
+            binding.btnEnableLocation.visibility = View.GONE
+            binding.btnGetLocation.visibility = View.VISIBLE
+        }
     }
 
     private fun checkLocationService() {
@@ -139,6 +193,7 @@ class PostingFragment : Fragment() {
 
         if (!locationEnabled) {
             AlertDialog.Builder(context)
+                .setTitle("Lokasi Perangkat")
                 .setMessage("Nyalakan lokasi perangkat untuk mendapatkan lokasi")
                 .setPositiveButton(
                     "Ok"
@@ -146,8 +201,12 @@ class PostingFragment : Fragment() {
                     requireContext().startActivity(
                         Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                     )
+                    binding.mapProgressbar.visibility = View.VISIBLE
                 }
-                .setNegativeButton("Tolak", null)
+                .setNegativeButton("Tolak") { _, _ ->
+                    binding.btnEnableLocation.visibility = View.VISIBLE
+                    binding.btnGetLocation.visibility = View.GONE
+                }
                 .show()
         }
     }
@@ -198,6 +257,7 @@ class PostingFragment : Fragment() {
                             "lat: $lat  long: $long",
                             Toast.LENGTH_SHORT
                         ).show()
+                        lifecycleScope.cancel()
                     }
                 }
             }
