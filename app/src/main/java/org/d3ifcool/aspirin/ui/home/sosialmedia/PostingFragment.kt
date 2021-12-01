@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseUser
 import com.otaliastudios.cameraview.CameraUtils
 import org.d3ifcool.aspirin.R
+import org.d3ifcool.aspirin.data.model.comment.Comment
 import org.d3ifcool.aspirin.databinding.FragmentPostingBinding
 import org.d3ifcool.aspirin.ui.camera.PreviewFragment
 import java.io.File
@@ -100,12 +101,14 @@ class PostingFragment : Fragment() {
             "${System.currentTimeMillis()}_${UUID.randomUUID()}.jpg"
         )
 
+        val comment = listOf(Comment("",0,"",""))
+
         CameraUtils.writeToFile(PreviewFragment.pictureResult!!.data, file) {
             if (it != null) {
                 val context = requireContext()
                 photoUri =
                     FileProvider.getUriForFile(context, context.packageName + ".provider", file)
-                viewModel.postData(username, judul, lokasi, deskripsi, currentDate, photoUri)
+                viewModel.postData(username, judul, lokasi, deskripsi, currentDate, photoUri, comment)
             } else {
                 Toast.makeText(
                     context,

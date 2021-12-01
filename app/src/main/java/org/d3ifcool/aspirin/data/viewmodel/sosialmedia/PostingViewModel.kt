@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.d3ifcool.aspirin.data.model.comment.Comment
 import org.d3ifcool.aspirin.data.viewmodel.authentication.UserLiveData
 import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import org.d3ifcool.aspirin.data.network.Repo
@@ -32,11 +33,12 @@ class PostingViewModel : ViewModel() {
         lokasi: String,
         deskripsi: String,
         currentDate: String,
-        photoUri: Uri
+        photoUri: Uri,
+        comments: List<Comment>
     ) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                repo.postData(username, judul, lokasi, deskripsi, currentDate, photoUri)
+                repo.postData(username, judul, lokasi, deskripsi, currentDate, photoUri, comments)
             }
         }
     }

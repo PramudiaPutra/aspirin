@@ -12,5 +12,5 @@ data class PostingData(
     val deskripsiPosting: String? = null,
     val tanggalPosting: String? = null,
     val photoUrl: String? = null,
-    val comments: List<Comment>
+    val comments: List<Comment>? = null
 ): Parcelable

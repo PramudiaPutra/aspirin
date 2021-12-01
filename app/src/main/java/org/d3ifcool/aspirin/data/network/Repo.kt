@@ -8,6 +8,7 @@ import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import org.d3ifcool.aspirin.data.model.comment.Comment
 import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import java.io.File
 
@@ -46,7 +47,8 @@ class Repo {
         lokasi: String,
         deskripsi: String,
         currentDate: String,
-        photoUri: Uri
+        photoUri: Uri,
+        comments: List<Comment>
     ) {
 
         storageReference =
@@ -67,7 +69,8 @@ class Repo {
                             lokasi,
                             deskripsi,
                             currentDate,
-                            uri.toString()
+                            uri.toString(),
+                            comments
                         )
 
                         database.child("postingan")
