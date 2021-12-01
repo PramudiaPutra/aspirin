@@ -61,8 +61,6 @@ class SosialMediaAdapter : RecyclerView.Adapter<SosialMediaAdapter.ViewHolder>()
                 .applyDefaultRequestOptions(requestOption)
                 .load(dataPosting.photoUrl)
                 .into(imgPosting)
-
-
         }
     }
 

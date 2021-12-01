@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
@@ -13,8 +14,11 @@ import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import java.io.File
 
 class Repo {
+
+    val user = FirebaseAuth.getInstance().currentUser
     private lateinit var database: DatabaseReference
     private lateinit var storageReference: StorageReference
+
     var postingStatus = MutableLiveData<Boolean>()
 
     fun getPostingData(): LiveData<MutableList<PostingData>> {
@@ -90,5 +94,28 @@ class Repo {
 
     fun getPostingStatus(): LiveData<Boolean> {
         return postingStatus
+    }
+
+    fun getComments(): LiveData<MutableList<Comment>> {
+        val dataMutableList = MutableLiveData<MutableList<Comment>>()
+        if (user != null) {
+            database = FirebaseDatabase.getInstance().reference.child("postingan").child(user.uid).child("comments")
+        }
+        val list = mutableListOf<Comment>()
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                for (snapshot in dataSnapshot.children) {
+                    val comments = snapshot.getValue(Comment::class.java)
+                    if (comments != null) {
+                        list.add(comments)
+                    }
+                }
+                dataMutableList.value = list
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+        return dataMutableList
     }
 }
