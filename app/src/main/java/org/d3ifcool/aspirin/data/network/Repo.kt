@@ -83,6 +83,7 @@ class Repo {
 
                     storageReference.downloadUrl
                         .addOnSuccessListener { uri ->
+                            postingData.photoUrl = uri.toString()
 
                             database.child("postingan")
                                 .child(pushKey)
