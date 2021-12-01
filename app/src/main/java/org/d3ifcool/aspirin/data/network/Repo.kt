@@ -40,6 +40,31 @@ class Repo {
         return dataMutableList
     }
 
+    fun getMapData(): LiveData<MutableList<MapData>> {
+        val mapData = MutableLiveData<MutableList<MapData>>()
+        val mapList = mutableListOf<MapData>()
+
+        database = FirebaseDatabase.getInstance().reference.child(
+            "location"
+        )
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (snapshot in dataSnapshot.children) {
+                    val mapSnapshot = snapshot.getValue(MapData::class.java)
+                    if (mapSnapshot != null) {
+                        mapSnapshot.key = snapshot.key
+                        mapList.add(mapSnapshot)
+                    }
+                }
+                mapData.value = mapList
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
+        return mapData
+    }
+
     fun postData(
         postingData: PostingData,
         mapData: MapData?,
