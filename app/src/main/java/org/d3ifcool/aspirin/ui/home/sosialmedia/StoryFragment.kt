@@ -2,6 +2,7 @@ package org.d3ifcool.aspirin.ui.home.sosialmedia
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,12 +28,14 @@ class StoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentStoryBinding.inflate(layoutInflater)
+        Log.d("Reset", "A")
+        observeData()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.d("ULANG", "Ulang data")
         myadapter = SosialMediaAdapter()
         with(binding.recyclerView){
             val linearLayoutManager = LinearLayoutManager(context)

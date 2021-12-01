@@ -1,7 +1,6 @@
 package org.d3ifcool.aspirin.data.network
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
@@ -10,6 +9,8 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import java.io.File
+import com.google.firebase.database.DataSnapshot
+
 
 class Repo {
     private lateinit var database: DatabaseReference
@@ -23,20 +24,23 @@ class Repo {
                 "postingan"
             )
         val list = mutableListOf<PostingData>()
-        database.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                for (snapshot in dataSnapshot.children) {
-                    val stories = snapshot.getValue(PostingData::class.java)
-                    if (stories != null) {
-                        list.add(stories)
-                    }
+        database.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val stories = snapshot.getValue(PostingData::class.java)
+                if (stories != null) {
+                    list.add(stories)
+                    dataMutableList.value = list
                 }
-                dataMutableList.value = list
             }
 
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {}
+
         })
+
         return dataMutableList
     }
 

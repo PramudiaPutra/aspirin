@@ -33,13 +33,6 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.auth.observe(viewLifecycleOwner, { authState(it) })
-
-
-//        Handler(Looper.getMainLooper()).postDelayed({
-//            context?.let {
-//                findNavController().navigate(R.id.action_splash_to_loginFragment)
-//            }
-//        }, 500)
     }
 
     private fun authState(user: FirebaseUser?) {
