@@ -29,7 +29,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.firebase.auth.FirebaseUser
 import com.otaliastudios.cameraview.CameraUtils
 import org.d3ifcool.aspirin.R
@@ -343,6 +342,7 @@ class PostingFragment : Fragment() {
                     FileProvider.getUriForFile(context, context.packageName + ".provider", file)
 
                 val postingData = PostingData(
+                    null,
                     username,
                     judul,
                     lokasi,

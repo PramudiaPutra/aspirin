@@ -4,14 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.15555555555555556" />
-        <entry key="..\:/Users/Administrator_/AndroidStudioProjects/43-mobpro-izm-43gab2-aspirin/app/src/main/res/layout/fragment_posting.xml" value="0.12183383991894631" />
-        <entry key="..\:/Users/Administrator_/AndroidStudioProjects/43-mobpro-izm-43gab2-aspirin/app/src/main/res/layout/fragment_story.xml" value="0.1" />
-        <entry key="..\:/Users/Administrator_/AndroidStudioProjects/43-mobpro-izm-43gab2-aspirin/app/src/main/res/layout/item_cardview_postingan.xml" value="0.264" />
         <entry key="app/src/main/res/drawable/aspirin_logo.xml" value="0.17314814814814813" />
         <entry key="app/src/main/res/drawable/button_round.xml" value="0.3328125" />
         <entry key="app/src/main/res/drawable/button_round_ripple.xml" value="0.2638888888888889" />
         <entry key="app/src/main/res/drawable/cross_icon.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/drawable/group_5915.xml" value="0.17314814814814813" />
+        <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.12037037037037036" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.36205128205128206" />
         <entry key="app/src/main/res/drawable/splash_screen.xml" value="0.2611111111111111" />
         <entry key="app/src/main/res/drawable/splash_screen_gradient.xml" value="0.1574074074074074" />
@@ -28,16 +26,18 @@
         <entry key="app/src/main/res/layout/activity_sosial_media.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_camera.xml" value="0.31666666666666665" />
+        <entry key="app/src/main/res/layout/fragment_comment.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_locations.xml" value="0.31666666666666665" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_photo_preview.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_posting.xml" value="0.31666666666666665" />
         <entry key="app/src/main/res/layout/fragment_preview.xml" value="0.27685185185185185" />
-        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.17269076305220885" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.31614583333333335" />
         <entry key="app/src/main/res/layout/fragment_story.xml" value="0.2388888888888889" />
         <entry key="app/src/main/res/layout/item_cardview_postingan.xml" value="0.31666666666666665" />
+        <entry key="app/src/main/res/layout/item_comment.xml" value="0.34615384615384615" />
         <entry key="app/src/main/res/layout/map.xml" value="0.31666666666666665" />
         <entry key="app/src/main/res/layout/splash_screen.xml" value="0.25" />
         <entry key="app/src/main/res/xml/filepaths.xml" value="0.13489583333333333" />

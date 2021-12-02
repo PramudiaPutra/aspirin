@@ -4,4 +4,8 @@
     <style name="CurveEdgeImage" parent="">
         <item name="cornerSize">40%</item>
     </style>
+    <style name="Rounded" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
 </resources>

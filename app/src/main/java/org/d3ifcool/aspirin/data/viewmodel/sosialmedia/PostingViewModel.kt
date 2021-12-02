@@ -1,6 +1,5 @@
 package org.d3ifcool.aspirin.data.viewmodel.sosialmedia
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

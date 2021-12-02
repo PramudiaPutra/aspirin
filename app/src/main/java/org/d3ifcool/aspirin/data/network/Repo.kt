@@ -1,7 +1,6 @@
 package org.d3ifcool.aspirin.data.network
 
 import androidx.core.net.toUri
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
@@ -12,7 +11,9 @@ import org.d3ifcool.aspirin.data.model.sosialmedia.MapData
 import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import java.io.File
 import com.google.firebase.database.DataSnapshot
+import org.d3ifcool.aspirin.data.model.comment.CommentData
 
+import java.util.*
 
 class Repo {
     private lateinit var database: DatabaseReference
@@ -31,6 +32,7 @@ class Repo {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val stories = snapshot.getValue(PostingData::class.java)
                 if (stories != null) {
+                    stories.key = snapshot.key
                     list.add(stories)
                     dataMutableList.value = list
                 }
@@ -44,6 +46,30 @@ class Repo {
         })
 
         return dataMutableList
+    }
+
+    fun getCommentData(key: String): LiveData<MutableList<CommentData>> {
+        val commentData = MutableLiveData<MutableList<CommentData>>()
+        val commentList = mutableListOf<CommentData>()
+
+        database = FirebaseDatabase.getInstance().reference.child("comments").child(key)
+        database.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val comments = snapshot.getValue(CommentData::class.java)
+                if (comments != null) {
+                    commentList.add(comments)
+                    commentData.value = commentList
+                }
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
+
+        return commentData
     }
 
     fun getMapData(): LiveData<MutableList<MapData>> {
@@ -111,6 +137,12 @@ class Repo {
                     postingStatus.postValue(false)
                 }
         }
+    }
+
+    fun postComment(commentData: CommentData) {
+        database = FirebaseDatabase.getInstance().reference
+        val pushKey = database.push().key.toString()
+        database.child("comments").child(commentData.key.toString()).child(pushKey).setValue(commentData)
     }
 
     fun getPostingStatus(): LiveData<Boolean> {
