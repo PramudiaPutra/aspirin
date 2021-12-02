@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import org.d3ifcool.aspirin.R
 import org.d3ifcool.aspirin.data.model.comment.CommentData
 import org.d3ifcool.aspirin.databinding.ItemCommentBinding
 
-//class CommentAdapter(private val listComment: ArrayList<Comment>) : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
-class CommentAdapter() : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
+class CommentAdapter : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
     private var listComment = mutableListOf<CommentData>()
     fun setListData(data:MutableList<CommentData>){
         listComment = data
@@ -30,9 +30,9 @@ class CommentAdapter() : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemCommentBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: CommentData) = with(binding) {
-//            Glide.with(profileImageComment.context).load(data.photoUser).into(profileImageComment)
-//            tvNamaUserComment.text = data.username
-//            tvMessage.text = data.commentContent
+            Glide.with(profileImageComment.context).load(R.drawable.aspirin_main_icon).into(profileImageComment)
+            tvNamaUserComment.text = data.username
+            tvMessage.text = data.comment
         }
 
     }

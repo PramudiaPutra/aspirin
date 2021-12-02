@@ -1,5 +1,6 @@
 package org.d3ifcool.aspirin.ui.home.comment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseUser
 import org.d3ifcool.aspirin.R
@@ -25,8 +27,6 @@ class CommentFragment : Fragment() {
     private lateinit var userId: String
     private lateinit var username: String
 
-
-    //    private var list: ArrayList<Comment> = arrayListOf()
     private val viewModel: CommentViewModel by lazy {
         ViewModelProvider(this).get(CommentViewModel::class.java)
     }
@@ -42,6 +42,40 @@ class CommentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkEmptyForm()
+       getArgsData()
+
+        binding.buttonComment.setOnClickListener {
+            addComment()
+            binding.edtComment.text?.clear()
+        }
+
+        viewModel.authUser.observe(viewLifecycleOwner, { getCurrentUser(it) })
+
+        myadapter = CommentAdapter()
+        with(binding.recyclerViewComment) {
+            val linearLayoutManager = LinearLayoutManager(context)
+            linearLayoutManager.reverseLayout = true
+            linearLayoutManager.stackFromEnd = true
+
+            layoutManager = linearLayoutManager
+            observeData()
+            setHasFixedSize(true)
+            adapter = myadapter
+        }
+
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun observeData() {
+        viewModel.fetchCommentData(key).observe(
+            viewLifecycleOwner, {
+                myadapter.setListData(it)
+                myadapter.notifyDataSetChanged()
+            }
+        )
+    }
+
+    private fun getArgsData() {
         val args = CommentFragmentArgs.fromBundle(requireArguments())
         key = args.posting.key.toString()
 
@@ -51,35 +85,11 @@ class CommentFragment : Fragment() {
         binding.tvNamaUser.text = args.posting.username
         binding.tvLokasiPosting.text = args.posting.lokasiPosting
         binding.tvTanggalPosting.text = args.posting.tanggalPosting
-
-        binding.buttonComment.setOnClickListener { addComment() }
-
-        viewModel.authUser.observe(viewLifecycleOwner, { getCurrentUser(it) })
-
-//        list.addAll(CommentData.listData)
-//        myadapter = CommentAdapter()
-//        with(binding.recyclerViewComment) {
-////            val linearLayoutManager = LinearLayoutManager(context)
-////            linearLayoutManager.reverseLayout = true
-////            linearLayoutManager.stackFromEnd = true
-////            layoutManager = linearLayoutManager
-////            setHasFixedSize(true)
-////            val listCommentAdapter = CommentAdapter(list)
-////            adapter = listCommentAdapter
-//            val linearLayoutManager = LinearLayoutManager(context)
-//            linearLayoutManager.reverseLayout = true
-//            linearLayoutManager.stackFromEnd = true
-//
-//            layoutManager = linearLayoutManager
-////            observeData()
-//            setHasFixedSize(true)
-//            adapter = myadapter
-//        }
     }
 
 
     private fun addComment() {
-        val comment = binding.edtComment.toString()
+        val comment = binding.edtComment.text.toString()
         val sdf = SimpleDateFormat("dd/M/yyyy", Locale.getDefault())
         val currentDate = sdf.format(Date())
 
@@ -117,13 +127,4 @@ class CommentFragment : Fragment() {
         username = user!!.displayName.toString()
         userId = user.uid
     }
-//    @SuppressLint("NotifyDataSetChanged")
-//    private fun observeData() {
-//        viewModel.fetchCommentData().observe(
-//            viewLifecycleOwner, {
-//                myadapter.setListData(it)
-//                myadapter.notifyDataSetChanged()
-//            }
-//        )
-//    }
 }

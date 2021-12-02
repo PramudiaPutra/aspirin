@@ -50,9 +50,24 @@ class Repo {
 
     fun getCommentData(key: String): LiveData<MutableList<CommentData>> {
         val commentData = MutableLiveData<MutableList<CommentData>>()
-        val commentList = mutableListOf<MapData>()
+        val commentList = mutableListOf<CommentData>()
 
         database = FirebaseDatabase.getInstance().reference.child("comments").child(key)
+        database.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val comments = snapshot.getValue(CommentData::class.java)
+                if (comments != null) {
+                    commentList.add(comments)
+                    commentData.value = commentList
+                }
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
 
         return commentData
     }
