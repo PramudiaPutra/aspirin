@@ -28,11 +28,11 @@
         <entry key="app/src/main/res/layout/fragment_camera.xml" value="0.31666666666666665" />
         <entry key="app/src/main/res/layout/fragment_comment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_locations.xml" value="0.31666666666666665" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_photo_preview.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_posting.xml" value="0.31666666666666665" />
         <entry key="app/src/main/res/layout/fragment_preview.xml" value="0.27685185185185185" />
-        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.17269076305220885" />
+        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.13043478260869565" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.31614583333333335" />
         <entry key="app/src/main/res/layout/fragment_story.xml" value="0.33" />
