@@ -51,7 +51,7 @@ class SosialMediaAdapter : RecyclerView.Adapter<SosialMediaAdapter.ViewHolder>()
             tvLokasiPosting.text = dataPosting.lokasiPosting
             tvTitlePosting.text = dataPosting.judulPosting
             tvKontenPosting.text = dataPosting.deskripsiPosting
-            Glide.with(profileImage.context).load(R.drawable.aspirin_main_icon).into(profileImage)
+//            Glide.with(profileImage.context).load(R.drawable.ic_baseline_account_circle_24).into(profileImage)
 
             val requestOption = RequestOptions()
                 .placeholder(R.drawable.icon_image)
