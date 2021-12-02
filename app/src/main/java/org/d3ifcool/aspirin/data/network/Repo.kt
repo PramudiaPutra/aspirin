@@ -1,16 +1,13 @@
 package org.d3ifcool.aspirin.data.network
 
 import androidx.core.net.toUri
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.aspirin.data.model.sosialmedia.MapData
-import org.d3ifcool.aspirin.data.model.comment.Comment
 import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import java.io.File
 import com.google.firebase.database.DataSnapshot
@@ -35,6 +32,7 @@ class Repo {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val stories = snapshot.getValue(PostingData::class.java)
                 if (stories != null) {
+                    stories.key = snapshot.key
                     list.add(stories)
                     dataMutableList.value = list
                 }
@@ -51,7 +49,7 @@ class Repo {
     }
 
     fun getCommentData(key: String): LiveData<MutableList<CommentData>> {
-        val commentData = MutableLiveData<MutableList<CommentData>> ()
+        val commentData = MutableLiveData<MutableList<CommentData>>()
         val commentList = mutableListOf<MapData>()
 
         database = FirebaseDatabase.getInstance().reference.child("comments").child(key)
@@ -124,6 +122,12 @@ class Repo {
                     postingStatus.postValue(false)
                 }
         }
+    }
+
+    fun postComment(commentData: CommentData) {
+        database = FirebaseDatabase.getInstance().reference
+        val pushKey = database.push().key.toString()
+        database.child("comments").child(commentData.key.toString()).child(pushKey).setValue(commentData)
     }
 
     fun getPostingStatus(): LiveData<Boolean> {

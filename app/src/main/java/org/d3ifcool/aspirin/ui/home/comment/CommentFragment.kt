@@ -1,29 +1,32 @@
 package org.d3ifcool.aspirin.ui.home.comment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseUser
 import org.d3ifcool.aspirin.R
-import org.d3ifcool.aspirin.data.model.comment.Comment
 import org.d3ifcool.aspirin.data.model.comment.CommentData
 import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.CommentViewModel
-import org.d3ifcool.aspirin.data.viewmodel.sosialmedia.PostingViewModel
 import org.d3ifcool.aspirin.databinding.FragmentCommentBinding
-import org.d3ifcool.aspirin.databinding.FragmentStoryBinding
-import org.d3ifcool.aspirin.ui.home.sosialmedia.SosialMediaAdapter
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CommentFragment : Fragment() {
 
     private lateinit var binding: FragmentCommentBinding
     private lateinit var myadapter: CommentAdapter
-    private var list: ArrayList<Comment> = arrayListOf()
+    private lateinit var key: String
+    private lateinit var userId: String
+    private lateinit var username: String
+
+
+    //    private var list: ArrayList<Comment> = arrayListOf()
     private val viewModel: CommentViewModel by lazy {
         ViewModelProvider(this).get(CommentViewModel::class.java)
     }
@@ -38,35 +41,82 @@ class CommentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkEmptyForm()
         val args = CommentFragmentArgs.fromBundle(requireArguments())
+        key = args.posting.key.toString()
 
         Glide.with(binding.imgComment.context).load(args.posting.photoUrl).into(binding.imgComment)
-        Glide.with(binding.profileImage.context).load(R.drawable.aspirin_main_icon).into(binding.profileImage)
+        Glide.with(binding.profileImage.context).load(R.drawable.aspirin_main_icon)
+            .into(binding.profileImage)
         binding.tvNamaUser.text = args.posting.username
         binding.tvLokasiPosting.text = args.posting.lokasiPosting
         binding.tvTanggalPosting.text = args.posting.tanggalPosting
 
-        list.addAll(CommentData.listData)
-        myadapter = CommentAdapter()
-        with(binding.recyclerViewComment){
+        binding.buttonComment.setOnClickListener { addComment() }
+
+        viewModel.authUser.observe(viewLifecycleOwner, { getCurrentUser(it) })
+
+//        list.addAll(CommentData.listData)
+//        myadapter = CommentAdapter()
+//        with(binding.recyclerViewComment) {
+////            val linearLayoutManager = LinearLayoutManager(context)
+////            linearLayoutManager.reverseLayout = true
+////            linearLayoutManager.stackFromEnd = true
+////            layoutManager = linearLayoutManager
+////            setHasFixedSize(true)
+////            val listCommentAdapter = CommentAdapter(list)
+////            adapter = listCommentAdapter
 //            val linearLayoutManager = LinearLayoutManager(context)
 //            linearLayoutManager.reverseLayout = true
 //            linearLayoutManager.stackFromEnd = true
+//
 //            layoutManager = linearLayoutManager
+////            observeData()
 //            setHasFixedSize(true)
-//            val listCommentAdapter = CommentAdapter(list)
-//            adapter = listCommentAdapter
-            val linearLayoutManager = LinearLayoutManager(context)
-            linearLayoutManager.reverseLayout = true
-            linearLayoutManager.stackFromEnd = true
+//            adapter = myadapter
+//        }
+    }
 
-            layoutManager = linearLayoutManager
-//            observeData()
-            setHasFixedSize(true)
-            adapter = myadapter
+
+    private fun addComment() {
+        val comment = binding.edtComment.toString()
+        val sdf = SimpleDateFormat("dd/M/yyyy", Locale.getDefault())
+        val currentDate = sdf.format(Date())
+
+        val commentData = CommentData(
+            key,
+            userId,
+            username,
+            comment,
+            currentDate
+        )
+        viewModel.postComment(commentData)
+    }
+
+    private fun checkEmptyForm() {
+        with(binding) {
+            buttonComment.isEnabled = false
+            val editTexts = listOf(edtComment)
+
+            for (editText in editTexts) {
+                editText.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        val edtComment = edtComment.text.toString().trim()
+                        buttonComment.isEnabled = edtComment.isNotEmpty()
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {}
+                })
+            }
         }
     }
 
+    private fun getCurrentUser(user: FirebaseUser?) {
+        username = user!!.displayName.toString()
+        userId = user.uid
+    }
 //    @SuppressLint("NotifyDataSetChanged")
 //    private fun observeData() {
 //        viewModel.fetchCommentData().observe(
