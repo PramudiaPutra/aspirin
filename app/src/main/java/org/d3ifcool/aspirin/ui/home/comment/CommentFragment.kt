@@ -61,19 +61,19 @@ class CommentFragment : Fragment() {
             linearLayoutManager.stackFromEnd = true
 
             layoutManager = linearLayoutManager
-            observeData()
+//            observeData()
             setHasFixedSize(true)
             adapter = myadapter
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun observeData() {
-        viewModel.fetchCommentData().observe(
-            viewLifecycleOwner, {
-                myadapter.setListData(it)
-                myadapter.notifyDataSetChanged()
-            }
-        )
-    }
+//    @SuppressLint("NotifyDataSetChanged")
+//    private fun observeData() {
+//        viewModel.fetchCommentData().observe(
+//            viewLifecycleOwner, {
+//                myadapter.setListData(it)
+//                myadapter.notifyDataSetChanged()
+//            }
+//        )
+//    }
 }

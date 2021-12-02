@@ -14,6 +14,7 @@ import org.d3ifcool.aspirin.data.model.comment.Comment
 import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import java.io.File
 import com.google.firebase.database.DataSnapshot
+import org.d3ifcool.aspirin.data.model.comment.CommentData
 
 import java.util.*
 
@@ -47,6 +48,15 @@ class Repo {
         })
 
         return dataMutableList
+    }
+
+    fun getCommentData(key: String): LiveData<MutableList<CommentData>> {
+        val commentData = MutableLiveData<MutableList<CommentData>> ()
+        val commentList = mutableListOf<MapData>()
+
+        database = FirebaseDatabase.getInstance().reference.child("comments").child(key)
+
+        return commentData
     }
 
     fun getMapData(): LiveData<MutableList<MapData>> {
