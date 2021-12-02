@@ -30,7 +30,7 @@ class CommentAdapter : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemCommentBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: CommentData) = with(binding) {
-            Glide.with(profileImageComment.context).load(R.drawable.aspirin_main_icon).into(profileImageComment)
+//            Glide.with(profileImageComment.context).load(R.drawable.ic_baseline_account_circle_24).into(profileImageComment)
             tvNamaUserComment.text = data.username
             tvMessage.text = data.comment
         }

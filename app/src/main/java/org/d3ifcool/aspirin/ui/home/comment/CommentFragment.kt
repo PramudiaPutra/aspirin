@@ -80,8 +80,8 @@ class CommentFragment : Fragment() {
         key = args.posting.key.toString()
 
         Glide.with(binding.imgComment.context).load(args.posting.photoUrl).into(binding.imgComment)
-        Glide.with(binding.profileImage.context).load(R.drawable.aspirin_main_icon)
-            .into(binding.profileImage)
+//        Glide.with(binding.profileImage.context).load(R.drawable.aspirin_splash_logo)
+//            .into(binding.profileImage)
         binding.tvNamaUser.text = args.posting.username
         binding.tvLokasiPosting.text = args.posting.lokasiPosting
         binding.tvTanggalPosting.text = args.posting.tanggalPosting

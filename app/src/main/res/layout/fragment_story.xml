@@ -12,27 +12,28 @@
         android:id="@+id/tv_menu_cerita"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
         android:layout_marginEnd="24dp"
         android:text="@string/ceita"
         android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/account_icon"
         app:layout_constraintEnd_toStartOf="@+id/tv_menu_lokasi"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/account_icon" />
 
     <TextView
         android:id="@+id/tv_menu_lokasi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
         android:text="@string/lokasi"
         android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/account_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/account_icon" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,11 +55,20 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/account_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/ic_baseline_account_circle_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Username"
+        app:layout_constraintBottom_toBottomOf="@+id/account_icon"
+        app:layout_constraintStart_toEndOf="@+id/account_icon"
+        app:layout_constraintTop_toTopOf="@+id/account_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

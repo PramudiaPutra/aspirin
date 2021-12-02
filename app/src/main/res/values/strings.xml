@@ -45,7 +45,7 @@
     <string name="icon_location">icon_location</string>
     <string name="tempat_kegiatan">Tempat kegiatan</string>
     <string name="photo_image">photo_image</string>
-    <string name="tulis_comment">Tulis comment...</string>
+    <string name="tulis_comment">Tulis comment…</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
     <string name="aspirin_pembuka">Aspirin merupakan aplikasi berbasis Android di bidang lingkungan dan sosial. Aplikasi ini memiliki tujuan, memberi kesadaran terhadap masyarakat tentang kepedulian keadaan di sekitar, sehingga masyarakat dapat berpartisipasi dalam menyampaikan aspirasi guna berkontribusi kepada daerah.</string>
     <string name="daftar_fitur">Daftar Fitur</string>
@@ -65,4 +65,7 @@
     <string name="deskripsi_perangkat">Anda harus menyediakan perangkat seluler, perangkat lunak, dan koneksi data tertentu untuk menggunakan layanan kami, yang tidak kami sediakan.</string>
     <string name="perubahan_kebijakan_privasi_kami">Perubahan Kebijakan Privasi Kami</string>
     <string name="deskripsi_perubahan_kebijakan">Kami dapat mengubah atau merevisi Kebijakan Privasi. Setiap perubahan pada Kebijakan Privasi ini akan menjadi efektif ketika kami mengumumkan versi revisi melalui aplikasi Aspirin #AspirasiIndonesia. Kami sangat menganjurkan Anda untuk mengakses aplikasi kami secara berkala agar mengetahui perubahan-perubahan terbaru. Dengan terus mengakses dan menggunakan layanan Aspirin, Anda dianggap telah menerima dan menyetujui segala perubahan.</string>
+    <string name="image_comment">image_comment</string>
+    <string name="komentar">Komentar</string>
+    <string name="story_image">story_image</string>
 </resources>

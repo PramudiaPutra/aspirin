@@ -7,6 +7,7 @@
     tools:context=".ui.home.comment.CommentFragment">
 
     <ImageView
+        android:contentDescription="@string/image_comment"
         android:id="@+id/img_comment"
         android:layout_width="match_parent"
         android:layout_height="170dp"
@@ -20,10 +21,10 @@
         android:id="@+id/ic_lokasi"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_marginTop="8dp"
         android:src="@drawable/ic_baseline_location_on_24"
         app:layout_constraintEnd_toStartOf="@+id/tv_lokasi_posting"
-        app:layout_constraintTop_toBottomOf="@id/img_comment" />
+        app:layout_constraintTop_toTopOf="@+id/tv_nama_user"
+        tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:id="@+id/text_field_comment"
@@ -40,17 +41,17 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:hint="@string/email"
             app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_comment"
-                android:backgroundTint="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
                 android:hint="@string/tulis_comment"
                 android:inputType="textEmailAddress" />
 
@@ -62,7 +63,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_baseline_send_red_24" />
+            android:src="@drawable/ic_baseline_send_red_24"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 
     <TextView
@@ -70,9 +72,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:text="@string/akhdan_pangestuaji"
-        android:textSize="12sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/profile_image"
         app:layout_constraintTop_toBottomOf="@id/img_comment" />
 
@@ -80,12 +82,12 @@
         android:id="@+id/tv_lokasi_posting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
         android:text="@string/hint_lokasi_posting"
-        android:textSize="6sp"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_lokasi"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_comment" />
+        app:layout_constraintTop_toTopOf="@+id/ic_lokasi" />
 
     <TextView
         android:id="@+id/tv_lokasi"
@@ -93,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:text="Komentar"
+        android:text="@string/komentar"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +108,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="3dp"
         android:text="@string/hint_tanggal_posting"
-        android:textSize="6sp"
+        android:textSize="11sp"
         app:layout_constraintStart_toEndOf="@id/profile_image"
         app:layout_constraintTop_toBottomOf="@id/tv_nama_user" />
 
@@ -125,15 +127,14 @@
         app:layout_constraintTop_toBottomOf="@id/tv_lokasi"
         tools:listitem="@layout/item_comment" />
 
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_baseline_account_circle_24"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_tanggal_posting"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_comment"
-        tools:src="@drawable/aspirin_main_icon" />
-
+        app:layout_constraintTop_toTopOf="@+id/tv_nama_user" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
