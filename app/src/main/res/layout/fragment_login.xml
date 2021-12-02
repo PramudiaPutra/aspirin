@@ -99,7 +99,6 @@
       android:layout_height="wrap_content"
       android:fontFamily="@font/baloo"
       android:text="@string/login_title"
-      android:textColor="@color/black"
       android:textSize="32sp"
       app:layout_constraintBottom_toBottomOf="@id/aspirin_icon"
       app:layout_constraintStart_toEndOf="@id/aspirin_icon" />
@@ -124,7 +123,6 @@
       android:layout_marginTop="16dp"
       android:fontFamily="@font/nunito_semibold"
       android:text="@string/email"
-      android:textColor="@color/black"
       android:textSize="20sp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/text_view1" />
@@ -137,7 +135,6 @@
       android:layout_marginTop="16dp"
       android:fontFamily="@font/nunito_semibold"
       android:text="@string/password"
-      android:textColor="@color/black"
       android:textSize="20sp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/text_field_email" />
