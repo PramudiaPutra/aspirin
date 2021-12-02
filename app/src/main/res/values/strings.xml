@@ -46,4 +46,23 @@
     <string name="tempat_kegiatan">Tempat kegiatan</string>
     <string name="photo_image">photo_image</string>
     <string name="tulis_comment">Tulis comment...</string>
+    <string name="tentang_aplikasi">Tentang Aplikasi</string>
+    <string name="aspirin_pembuka">Aspirin merupakan aplikasi berbasis Android di bidang lingkungan dan sosial. Aplikasi ini memiliki tujuan, memberi kesadaran terhadap masyarakat tentang kepedulian keadaan di sekitar, sehingga masyarakat dapat berpartisipasi dalam menyampaikan aspirasi guna berkontribusi kepada daerah.</string>
+    <string name="daftar_fitur">Daftar Fitur</string>
+    <string name="deskripsi_fitur">- Login dan register Login ini digunakan untuk identifikasi pengguna, dan register sendiri digunakan untuk membuat akun Aspirin. \n\n- Postingan Digunakan untuk menampilkan aspirasi pengguna dan berbagi kepada pengguna lain. \n\n- Maps Fitur opsional yang dapat dimanfaatkan pengguna untuk berbagi lokasi mengenai aspirasi yang telah dibagikan</string>
+    <string name="kebijakan_privasi">Kebijakan Privasi</string>
+    <string name="deskripsi_privasi">Aspirin berkomitmen untuk menghormati dan melindungi privasi Anda. Kami memahami betapa pentingnya data pribadi Anda dan kami tidak akan membagikannya kepada orang-orang atau pihak ketiga lainnya tanpa izin Anda. Silakan baca Kebijakan Privasi berikut untuk mempelajari lebih lanjut tentang bagaimana kami akan menjunjung tinggi janji kami kepada Anda. \n\nKebijakan ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan mengungkapkan data pribadi Anda yang kami peroleh saat Anda menggunakan Aspirin. Dengan terus menggunakan atau mengakses aplikasi kami, itu berarti Anda telah menerima praktik-praktik yang diuraikan dalam Kebijakan ini.</string>
+    <string name="informasi_privasi">Informasi yang Kami Akses dan Kumpulkan</string>
+    <string name="deskripsi_informasi_privasi"><b>Informasi Akun:</b> Dengan membuat akun di Aspirin, Anda sudah memberikan email. Informasi lainnya seperti nama, foto profil, dan lokasi juga dapat dilihat dan disimpan oleh kami. \n\n<b>Koneksi:</b> Untuk membantu Anda dalam menemukan berbagai informasi mengenai aspirasi berdasarkan lokasi, dan juga untuk berinteraksi dengan pengguna lain melalui postingan. \n\n<b>Data dari Pengaturan Perangkat Seluler:</b> Kami memperoleh informasi yang Anda izinkan lalu kami terima seperti akses ke kamera atau foto dan lokasi Anda untuk menggunakan fitur layanan kami.</string>
+    <string name="data_pengguna">Data Pengguna</string>
+    <string name="deskripsi_data_pengguna">Kami menyimpan informasi di server yang berlokasi di Asia Tenggara. Kami bekerja dengan pihak ketiga untuk menyediakan berbagai layanan terkait teknologi. Data percakapan kamu tidak dibagikan dengan perusahaan atau layanan lain manapun. Data postingan kamu secara aman disimpan dan tidak digunakan untuk kepentingan apapun selain pengembangan aplikasi.</string>
+    <string name="persyaratan_layanan">Persyaratan Layanan</string>
+    <string name="registrasi">Registrasi</string>
+    <string name="deskripsi_registrasi">Anda harus mendaftar untuk menggunakan layanan kami menggunakan data yang akurat serta memberikan email Anda saat ini.</string>
+    <string name="umur">Umur</string>
+    <string name="deskripsi_umur">Usia minimal untuk menggunakan layanan kami adalah 18 tahun.</string>
+    <string name="perangkat_seluler_dan_perangkat_lunak">Perangkat Seluler dan Perangkat Lunak</string>
+    <string name="deskripsi_perangkat">Anda harus menyediakan perangkat seluler, perangkat lunak, dan koneksi data tertentu untuk menggunakan layanan kami, yang tidak kami sediakan.</string>
+    <string name="perubahan_kebijakan_privasi_kami">Perubahan Kebijakan Privasi Kami</string>
+    <string name="deskripsi_perubahan_kebijakan">Kami dapat mengubah atau merevisi Kebijakan Privasi. Setiap perubahan pada Kebijakan Privasi ini akan menjadi efektif ketika kami mengumumkan versi revisi melalui aplikasi Aspirin #AspirasiIndonesia. Kami sangat menganjurkan Anda untuk mengakses aplikasi kami secara berkala agar mengetahui perubahan-perubahan terbaru. Dengan terus mengakses dan menggunakan layanan Aspirin, Anda dianggap telah menerima dan menyetujui segala perubahan.</string>
 </resources>

@@ -37,6 +37,12 @@ class SettingFragment : Fragment() {
         binding.buttonKeluar.setOnClickListener {
             logOut()
         }
+        binding.buttonKebijakanPrivasi.setOnClickListener{
+            findNavController().navigate(R.id.action_settingActivity_to_privasiFragment)
+        }
+        binding.buttonTentangAspirin.setOnClickListener{
+            findNavController().navigate(R.id.action_settingActivity_to_aboutFragment)
+        }
     }
 
     private fun getCurrentUser(user: FirebaseUser?) {
