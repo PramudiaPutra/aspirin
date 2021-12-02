@@ -2,6 +2,7 @@ package org.d3ifcool.aspirin.ui.home.sosialmedia
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +46,10 @@ class StoryFragment : Fragment() {
             observeData()
             setHasFixedSize(true)
             adapter = myadapter
+        }
+
+        binding.tvMenuLokasi.setOnClickListener {
+            findNavController().navigate(R.id.action_storyFragment_to_locationFragment)
         }
 
         myadapter.setOnItemClickCallback(object : SosialMediaAdapter.OnItemClickCallback {

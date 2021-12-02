@@ -1,7 +1,7 @@
 package org.d3ifcool.aspirin.data.network
 
+import androidx.core.net.toUri
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
@@ -9,18 +9,17 @@ import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import org.d3ifcool.aspirin.data.model.sosialmedia.MapData
 import org.d3ifcool.aspirin.data.model.comment.Comment
 import org.d3ifcool.aspirin.data.model.sosialmedia.PostingData
 import java.io.File
+import com.google.firebase.database.DataSnapshot
+
 import java.util.*
 
 class Repo {
-
     private lateinit var database: DatabaseReference
-    val user = FirebaseAuth.getInstance().currentUser
-    private lateinit var groupId: String
     private lateinit var storageReference: StorageReference
-
     var postingStatus = MutableLiveData<Boolean>()
 
     fun getPostingData(): LiveData<MutableList<PostingData>> {
@@ -30,98 +29,94 @@ class Repo {
                 "postingan"
             )
         val list = mutableListOf<PostingData>()
-        database.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                for (snapshot in dataSnapshot.children) {
-                    val stories = snapshot.getValue(PostingData::class.java)
-                    if (stories != null) {
-                        list.add(stories)
-                    }
+        database.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val stories = snapshot.getValue(PostingData::class.java)
+                if (stories != null) {
+                    list.add(stories)
+                    dataMutableList.value = list
                 }
-                dataMutableList.value = list
             }
 
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {}
+
         })
+
         return dataMutableList
     }
 
+    fun getMapData(): LiveData<MutableList<MapData>> {
+        val mapData = MutableLiveData<MutableList<MapData>>()
+        val mapList = mutableListOf<MapData>()
+
+        database = FirebaseDatabase.getInstance().reference.child(
+            "location"
+        )
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (snapshot in dataSnapshot.children) {
+                    val mapSnapshot = snapshot.getValue(MapData::class.java)
+                    if (mapSnapshot != null) {
+                        mapSnapshot.key = snapshot.key
+                        mapList.add(mapSnapshot)
+                    }
+                }
+                mapData.value = mapList
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
+        return mapData
+    }
+
     fun postData(
-        username: String,
-        judul: String,
-        lokasi: String,
-        deskripsi: String,
-        currentDate: String,
-        photoUri: Uri,
-        comments: List<Comment>
+        postingData: PostingData,
+        mapData: MapData?,
     ) {
 
         storageReference =
             Firebase.storage.reference
                 .child("uploads")
-                .child("camera/${File(photoUri.path).name}")
+                .child("camera/${File(postingData.photoUrl).name}")
 
         database = FirebaseDatabase.getInstance().reference
-        storageReference.putFile(photoUri)
-            .addOnSuccessListener {
+        val pushKey = database.push().key.toString()
+        postingData.photoUrl?.let {
+            storageReference.putFile(it.toUri())
+                .addOnSuccessListener {
 
-                storageReference.downloadUrl
-                    .addOnSuccessListener { uri ->
+                    storageReference.downloadUrl
+                        .addOnSuccessListener { uri ->
+                            postingData.photoUrl = uri.toString()
 
-                        val postingData = PostingData(
-                            username,
-                            judul,
-                            lokasi,
-                            deskripsi,
-                            currentDate,
-                            uri.toString(),
-                            comments
-                        )
+                            database.child("postingan")
+                                .child(pushKey)
+                                .setValue(postingData)
 
-                        database.child("postingan")
-//                            .child(database.push().key.toString())
-                            .child(UUID.randomUUID().toString())
-                            .setValue(postingData)
+                            if (mapData != null) {
+                                database.child("location")
+                                    .child(pushKey)
+                                    .setValue(mapData)
+                            }
 
-                        postingStatus.postValue(true)
-                    }
-                    .addOnFailureListener {
-                        postingStatus.postValue(false)
-                    }
-            }
-            .addOnFailureListener {
-                postingStatus.postValue(false)
-            }
+                            postingStatus.postValue(true)
+                        }
+                        .addOnFailureListener {
+                            postingStatus.postValue(false)
+                        }
+                }
+                .addOnFailureListener {
+                    postingStatus.postValue(false)
+                }
+        }
     }
 
     fun getPostingStatus(): LiveData<Boolean> {
         return postingStatus
-    }
-
-    fun getComments(): LiveData<MutableList<Comment>> {
-        val dataMutableList = MutableLiveData<MutableList<Comment>>()
-
-        Log.d("IDKU",UUID.randomUUID().toString() )
-        database = FirebaseDatabase.getInstance().reference.child(
-            "postingan"
-        ).child(UUID.randomUUID().toString()).child("comments")
-
-        val list = mutableListOf<Comment>()
-        database.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                for (snapshot in dataSnapshot.children) {
-                    val comments = snapshot.getValue(Comment::class.java)
-                    if (comments != null) {
-                        list.add(comments)
-                    }
-                }
-                dataMutableList.value = list
-            }
-
-            override fun onCancelled(error: DatabaseError) {}
-        })
-        return dataMutableList
     }
 }

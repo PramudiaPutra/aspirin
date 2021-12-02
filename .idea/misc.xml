@@ -4,17 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.15555555555555556" />
-        <entry key="..\:/Users/Administrator_/AndroidStudioProjects/43-mobpro-izm-43gab2-aspirin/app/src/main/res/layout/activity_main.xml" value="0.19655797101449277" />
-        <entry key="..\:/Users/Administrator_/AndroidStudioProjects/43-mobpro-izm-43gab2-aspirin/app/src/main/res/layout/fragment_camera.xml" value="0.19655797101449277" />
-        <entry key="..\:/Users/Administrator_/AndroidStudioProjects/43-mobpro-izm-43gab2-aspirin/app/src/main/res/layout/fragment_comment.xml" value="0.2" />
-        <entry key="..\:/Users/Administrator_/AndroidStudioProjects/43-mobpro-izm-43gab2-aspirin/app/src/main/res/layout/fragment_login.xml" value="0.12183383991894631" />
         <entry key="..\:/Users/Administrator_/AndroidStudioProjects/43-mobpro-izm-43gab2-aspirin/app/src/main/res/layout/fragment_posting.xml" value="0.12183383991894631" />
-        <entry key="..\:/Users/Administrator_/AndroidStudioProjects/43-mobpro-izm-43gab2-aspirin/app/src/main/res/layout/fragment_preview.xml" value="0.19655797101449277" />
-        <entry key="..\:/Users/Administrator_/AndroidStudioProjects/43-mobpro-izm-43gab2-aspirin/app/src/main/res/layout/fragment_register.xml" value="0.19655797101449277" />
-        <entry key="..\:/Users/Administrator_/AndroidStudioProjects/43-mobpro-izm-43gab2-aspirin/app/src/main/res/layout/fragment_splash.xml" value="0.19655797101449277" />
         <entry key="..\:/Users/Administrator_/AndroidStudioProjects/43-mobpro-izm-43gab2-aspirin/app/src/main/res/layout/fragment_story.xml" value="0.1" />
         <entry key="..\:/Users/Administrator_/AndroidStudioProjects/43-mobpro-izm-43gab2-aspirin/app/src/main/res/layout/item_cardview_postingan.xml" value="0.264" />
-        <entry key="..\:/Users/Administrator_/AndroidStudioProjects/43-mobpro-izm-43gab2-aspirin/app/src/main/res/layout/item_comment.xml" value="0.4" />
         <entry key="app/src/main/res/drawable/aspirin_logo.xml" value="0.17314814814814813" />
         <entry key="app/src/main/res/drawable/button_round.xml" value="0.3328125" />
         <entry key="app/src/main/res/drawable/button_round_ripple.xml" value="0.2638888888888889" />
@@ -36,6 +28,7 @@
         <entry key="app/src/main/res/layout/activity_sosial_media.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_camera.xml" value="0.31666666666666665" />
+        <entry key="app/src/main/res/layout/fragment_locations.xml" value="0.31666666666666665" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_photo_preview.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_posting.xml" value="0.31666666666666665" />
