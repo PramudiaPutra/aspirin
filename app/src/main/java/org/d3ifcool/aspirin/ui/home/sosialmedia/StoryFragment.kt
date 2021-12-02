@@ -60,7 +60,7 @@ class StoryFragment : Fragment() {
             }
         }
         )
-        binding.aspirinIcon.setOnClickListener {
+        binding.accountIcon.setOnClickListener {
             findNavController().navigate(R.id.action_storyFragment_to_settingActivity)
         }
 
