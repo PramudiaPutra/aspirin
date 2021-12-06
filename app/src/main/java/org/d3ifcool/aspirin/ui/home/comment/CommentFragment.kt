@@ -1,6 +1,7 @@
 package org.d3ifcool.aspirin.ui.home.comment
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseUser
@@ -24,8 +26,8 @@ class CommentFragment : Fragment() {
     private lateinit var binding: FragmentCommentBinding
     private lateinit var myadapter: CommentAdapter
     private lateinit var key: String
-    private lateinit var userId: String
-    private lateinit var username: String
+    private var userId: String? = null
+    private var username: String? = null
 
     private val viewModel: CommentViewModel by lazy {
         ViewModelProvider(this).get(CommentViewModel::class.java)
@@ -34,15 +36,16 @@ class CommentFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCommentBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkUserBeforeComment()
         checkEmptyForm()
-       getArgsData()
+        getArgsData()
 
         binding.buttonComment.setOnClickListener {
             addComment()
@@ -80,8 +83,6 @@ class CommentFragment : Fragment() {
         key = args.posting.key.toString()
 
         Glide.with(binding.imgComment.context).load(args.posting.photoUrl).into(binding.imgComment)
-//        Glide.with(binding.profileImage.context).load(R.drawable.aspirin_splash_logo)
-//            .into(binding.profileImage)
         binding.tvNamaUser.text = args.posting.username
         binding.tvLokasiPosting.text = args.posting.lokasiPosting
         binding.tvTanggalPosting.text = args.posting.tanggalPosting
@@ -124,7 +125,34 @@ class CommentFragment : Fragment() {
     }
 
     private fun getCurrentUser(user: FirebaseUser?) {
-        username = user!!.displayName.toString()
-        userId = user.uid
+        if (user != null) {
+            username = user.displayName.toString()
+            userId = user.uid
+        }
+    }
+
+    private fun checkUserBeforeComment() {
+        binding.edtComment.onFocusChangeListener =
+            View.OnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    if (userId == null && username == null) {
+                        AlertDialog.Builder(context)
+                            .setMessage("Silahkan melakukan login terlebih dahulu untuk memberikan comment")
+                            .setCancelable(false)
+                            .setPositiveButton(
+                                "Login"
+                            ) { _, _ ->
+                                findNavController().navigate(R.id.action_commentFragment_to_loginFragment)
+                            }
+                            .setNegativeButton(
+                                "Batal"
+                            ) { _, _ ->
+                                binding.edtComment.text?.clear()
+                                binding.edtComment.clearFocus()
+                            }
+                            .show()
+                    }
+                }
+            }
     }
 }

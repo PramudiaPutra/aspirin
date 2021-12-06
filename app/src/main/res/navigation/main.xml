@@ -121,6 +121,9 @@
         <argument
             android:name="posting"
             app:argType="org.d3ifcool.aspirin.data.model.sosialmedia.PostingData" />
+        <action
+            android:id="@+id/action_commentFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/locationFragment"
