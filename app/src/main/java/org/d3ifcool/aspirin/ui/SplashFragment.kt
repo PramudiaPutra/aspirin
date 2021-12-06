@@ -16,9 +16,9 @@ class SplashFragment : Fragment() {
 
     lateinit var binding: FragmentSplashBinding
 
-    private val viewModel: AuthViewModel by lazy {
-        ViewModelProvider(this).get(AuthViewModel::class.java)
-    }
+//    private val viewModel: AuthViewModel by lazy {
+//        ViewModelProvider(this).get(AuthViewModel::class.java)
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,15 +31,16 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        findNavController().navigate(R.id.action_splashFragment_to_storyFragment)
 
-        viewModel.auth.observe(viewLifecycleOwner, { authState(it) })
+//        viewModel.auth.observe(viewLifecycleOwner, { authState(it) })
     }
 
-    private fun authState(user: FirebaseUser?) {
-        if (user != null) {
-            findNavController().navigate(R.id.action_splashFragment_to_storyFragment)
-        } else {
-            findNavController().navigate(R.id.action_splash_to_loginFragment)
-        }
-    }
+//    private fun authState(user: FirebaseUser?) {
+//        if (user != null) {
+//            findNavController().navigate(R.id.action_splashFragment_to_storyFragment)
+//        } else {
+//            findNavController().navigate(R.id.action_splash_to_loginFragment)
+//        }
+//    }
 }

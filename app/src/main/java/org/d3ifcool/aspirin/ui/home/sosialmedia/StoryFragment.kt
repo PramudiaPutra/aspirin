@@ -82,6 +82,31 @@ class StoryFragment : Fragment() {
     private fun getCurrentUser(user: FirebaseUser?) {
         if (user != null) {
             binding.tvUsername.text = user.displayName.toString()
+            userAuthenticated()
+        } else {
+            binding.tvUsername.text = getString(R.string.login)
+            userNotAuthenticated()
         }
     }
+
+    private fun userAuthenticated() {
+        binding.accountIcon.setOnClickListener {
+            findNavController().navigate(R.id.action_storyFragment_to_settingActivity)
+        }
+
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_storyFragment_to_cameraFragment)
+        }
+    }
+
+    private fun userNotAuthenticated() {
+        binding.accountIcon.setOnClickListener {
+            findNavController().navigate(R.id.action_storyFragment_to_loginFragment)
+        }
+
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_storyFragment_to_loginFragment)
+        }
+    }
+
 }
