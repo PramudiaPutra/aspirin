@@ -2,9 +2,9 @@ package org.d3ifcool.aspirin.data.viewmodel.authentication
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.*
+
 
 class UserLiveData : LiveData<FirebaseUser?>() {
     private val firebaseAuth = FirebaseAuth.getInstance()
@@ -41,9 +41,10 @@ class UserLiveData : LiveData<FirebaseUser?>() {
                     errorMessage = "akun anda belum ter verifikasi, silahkan cek email anda"
                 }
             } else {
+                errorMessage(task)
                 authState.postValue(false)
                 verifiedState.postValue(false)
-                errorMessage = task.exception?.message.toString()
+//                errorMessage = task.exception?.message.toString()
             }
         }
     }
@@ -65,12 +66,12 @@ class UserLiveData : LiveData<FirebaseUser?>() {
                         authState.postValue(true)
                     } else {
                         authState.postValue(false)
-                        errorMessage = task.exception?.message.toString()
+                        errorMessage(task)
                     }
                 }
             } else {
                 authState.postValue(false)
-                errorMessage = task.exception?.message.toString()
+                errorMessage(task)
             }
         }
     }
@@ -81,11 +82,14 @@ class UserLiveData : LiveData<FirebaseUser?>() {
                 resetPasswordState.postValue(true)
             } else {
                 resetPasswordState.postValue(false)
-                errorMessage = task.exception?.message.toString()
+                errorMessage = when ((task.exception as FirebaseAuthException).errorCode) {
+                    "ERROR_INVALID_EMAIL" -> "Format email salah"
+                    "ERROR_USER_NOT_FOUND" -> "Email anda belum terdaftar"
+                    else -> task.exception?.message.toString()
+                }
             }
         }
     }
-
 
     fun getAuthStatus(): LiveData<Boolean> {
         return authState
@@ -101,5 +105,15 @@ class UserLiveData : LiveData<FirebaseUser?>() {
 
     fun getErrMessage(): String {
         return errorMessage
+    }
+
+    private fun errorMessage(task: Task<AuthResult>) {
+        errorMessage = when ((task.exception as FirebaseAuthException).errorCode) {
+            "ERROR_INVALID_EMAIL" -> "Format email salah"
+            "ERROR_WRONG_PASSWORD" -> "Password salah"
+            "ERROR_USER_NOT_FOUND" -> "Email anda belum terdaftar"
+            "ERROR_EMAIL_ALREADY_IN_USE" -> "Email sudah terdaftar"
+            else -> task.exception?.message.toString()
+        }
     }
 }
