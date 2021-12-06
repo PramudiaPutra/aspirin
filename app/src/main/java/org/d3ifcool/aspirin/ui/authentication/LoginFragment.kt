@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser
 import org.d3ifcool.aspirin.R
 import org.d3ifcool.aspirin.data.viewmodel.authentication.AuthViewModel
 import org.d3ifcool.aspirin.databinding.FragmentLoginBinding
+import org.d3ifcool.aspirin.utils.observeOnce
 
 class LoginFragment : Fragment() {
 
@@ -78,14 +79,22 @@ class LoginFragment : Fragment() {
 
     private fun authState(user: FirebaseUser?) {
         if (user != null) {
-            findNavController().navigate(R.id.action_loginFragment_to_storyFragment)
+            if (user.isEmailVerified) {
+                findNavController().navigate(R.id.action_loginFragment_to_storyFragment)
+            }
         }
     }
 
     private fun checkLoginStatus() {
         viewModel.getLoginStatus().observe(viewLifecycleOwner, { loginSuccess ->
             if (loginSuccess) {
-                findNavController().navigate(R.id.action_loginFragment_to_storyFragment)
+                viewModel.getVerifiedStatus().observe(viewLifecycleOwner, { verified ->
+                    if (verified) {
+                        findNavController().navigate(R.id.action_loginFragment_to_storyFragment)
+                    } else {
+                        binding.progressbar.visibility = View.GONE
+                    }
+                })
             } else {
                 val message = viewModel.getErrMessage()
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show()

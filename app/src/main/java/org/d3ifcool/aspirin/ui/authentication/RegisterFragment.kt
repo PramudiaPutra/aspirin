@@ -69,7 +69,7 @@ class RegisterFragment : Fragment() {
             if (registered) {
                 Toast.makeText(
                     context,
-                    "Register Success",
+                    "Register Success, silahkan verifikasi email anda",
                     Toast.LENGTH_LONG
                 ).show()
                 findNavController().popBackStack()

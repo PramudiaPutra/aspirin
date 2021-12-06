@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 class AuthViewModel : ViewModel() {
     val auth = UserLiveData()
     private var authStatus = auth.getAuthStatus()
+    private var verifiedCheck = auth.getVerifiedStatus()
 
     fun register(username: String, email: String, password: String) {
         auth.register(username, email, password)
@@ -21,6 +22,10 @@ class AuthViewModel : ViewModel() {
 
     fun getLoginStatus(): LiveData<Boolean> {
         return authStatus
+    }
+
+    fun getVerifiedStatus() : LiveData<Boolean> {
+        return verifiedCheck
     }
 
     fun getErrMessage(): String {
