@@ -15,7 +15,9 @@
             app:destination="@id/registerFragment" />
         <action
             android:id="@+id/action_loginFragment_to_storyFragment"
-            app:destination="@id/storyFragment" />
+            app:destination="@id/storyFragment"
+            app:popUpTo="@id/storyFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -57,7 +59,8 @@
             app:destination="@id/locationFragment" />
         <action
             android:id="@+id/action_storyFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/storyFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingActivity"
@@ -75,7 +78,9 @@
             app:destination="@id/aboutFragment" />
         <action
             android:id="@+id/action_settingActivity_to_storyFragment"
-            app:destination="@id/storyFragment" />
+            app:destination="@id/storyFragment"
+            app:popUpTo="@id/storyFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
