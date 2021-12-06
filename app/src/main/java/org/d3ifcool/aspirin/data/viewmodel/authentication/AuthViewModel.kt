@@ -7,6 +7,7 @@ class AuthViewModel : ViewModel() {
     val auth = UserLiveData()
     private var authStatus = auth.getAuthStatus()
     private var verifiedCheck = auth.getVerifiedStatus()
+    private var resetPasswordCheck = auth.getResetPasswordStatus()
 
     fun register(username: String, email: String, password: String) {
         auth.register(username, email, password)
@@ -14,6 +15,10 @@ class AuthViewModel : ViewModel() {
 
     fun login(email: String, password: String) {
         auth.login(email, password)
+    }
+
+    fun resetPassword(email: String) {
+        auth.resetPassword(email)
     }
 
     fun getRegisterStatus(): LiveData<Boolean> {
@@ -26,6 +31,10 @@ class AuthViewModel : ViewModel() {
 
     fun getVerifiedStatus() : LiveData<Boolean> {
         return verifiedCheck
+    }
+
+    fun getResetPasswordStatus(): LiveData<Boolean> {
+        return resetPasswordCheck
     }
 
     fun getErrMessage(): String {

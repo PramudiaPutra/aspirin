@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseUser
 import org.d3ifcool.aspirin.R
 import org.d3ifcool.aspirin.data.viewmodel.authentication.AuthViewModel
 import org.d3ifcool.aspirin.databinding.FragmentLoginBinding
-import org.d3ifcool.aspirin.utils.observeOnce
 
 class LoginFragment : Fragment() {
 
@@ -48,6 +47,11 @@ class LoginFragment : Fragment() {
         binding.toRegister.setOnClickListener {
             findNavController().navigate(
                 R.id.action_loginFragment_to_registerFragment
+            )
+        }
+        binding.textForgotPassword.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_loginFragment_to_forgotPasswordFragment
             )
         }
 

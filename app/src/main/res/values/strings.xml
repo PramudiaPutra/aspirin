@@ -68,4 +68,7 @@
     <string name="komentar">Komentar</string>
     <string name="story_image">story_image</string>
     <string name="login">Login/ Register</string>
+    <string name="forgot_passwd">Lupa Password</string>
+    <string name="reset_password_message">Masukan email yang sudah terdaftar untuk mengganti password</string>
+    <string name="reset_password">Ganti Password</string>
 </resources>

@@ -8,8 +8,9 @@ import com.google.firebase.auth.UserProfileChangeRequest
 
 class UserLiveData : LiveData<FirebaseUser?>() {
     private val firebaseAuth = FirebaseAuth.getInstance()
-    var authState = MutableLiveData<Boolean>()
-    var verifiedState = MutableLiveData<Boolean>()
+    private var authState = MutableLiveData<Boolean>()
+    private var verifiedState = MutableLiveData<Boolean>()
+    private var resetPasswordState = MutableLiveData<Boolean>()
 
     private var errorMessage = ""
 
@@ -74,12 +75,28 @@ class UserLiveData : LiveData<FirebaseUser?>() {
         }
     }
 
+    fun resetPassword(email: String) {
+        firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                resetPasswordState.postValue(true)
+            } else {
+                resetPasswordState.postValue(false)
+                errorMessage = task.exception?.message.toString()
+            }
+        }
+    }
+
+
     fun getAuthStatus(): LiveData<Boolean> {
         return authState
     }
 
     fun getVerifiedStatus(): LiveData<Boolean> {
         return verifiedState
+    }
+
+    fun getResetPasswordStatus(): LiveData<Boolean> {
+        return resetPasswordState
     }
 
     fun getErrMessage(): String {
