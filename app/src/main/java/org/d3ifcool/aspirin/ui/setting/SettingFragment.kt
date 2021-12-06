@@ -54,6 +54,6 @@ class SettingFragment : Fragment() {
 
     private fun logOut() {
         AuthUI.getInstance().signOut(requireContext())
-        findNavController().navigate(R.id.action_settingActivity_to_loginFragment)
+        findNavController().navigate(R.id.action_settingActivity_to_storyFragment)
     }
 }
