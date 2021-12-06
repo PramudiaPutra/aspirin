@@ -1,6 +1,7 @@
 package org.d3ifcool.aspirin.ui.home.sosialmedia
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -114,7 +115,19 @@ class StoryFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_storyFragment_to_loginFragment)
+            AlertDialog.Builder(context)
+                .setTitle("Membuat Postingan")
+                .setMessage("Silahkan melakukan login terlebih dahulu untuk membuat postingan")
+                .setCancelable(false)
+                .setPositiveButton(
+                    "Login"
+                ) { _, _ ->
+                    findNavController().navigate(R.id.action_storyFragment_to_loginFragment)
+                }
+                .setNegativeButton(
+                    "Batal"
+                ) { _, _ -> }
+                .show()
         }
     }
 
