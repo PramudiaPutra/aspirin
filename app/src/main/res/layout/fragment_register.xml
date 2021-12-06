@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".ui.authentication.RegisterFragment">
 
   <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,9 +28,11 @@
         android:layout_marginTop="16dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/tv_privacy_policy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_register">
+        app:layout_constraintTop_toBottomOf="@id/button_register"
+        app:layout_constraintVertical_bias="0.0">
 
       <TextView
           android:id="@+id/text_view5"
@@ -43,9 +46,22 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:fontFamily="@font/nunito"
-          android:text="@string/masuk"
+          android:text="@string/login_title"
           android:textColor="@color/orange_aspirin" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_privacy_policy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:gravity="center"
+        tools:text="Dengan mengunakan aplikasi Aspirin ada telah menyetujui kebijakan privasi dari aplikasi Aspirin"
+        android:textColorLink="@color/orange_aspirin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <ProgressBar
         android:id="@+id/progressbar"

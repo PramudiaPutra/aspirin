@@ -1,6 +1,7 @@
 package org.d3ifcool.aspirin.ui.home.sosialmedia
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,6 +36,7 @@ class StoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.authUser.observe(viewLifecycleOwner, { getCurrentUser(it) })
+        showLoading()
 
         myadapter = SosialMediaAdapter()
         with(binding.recyclerView) {
@@ -69,6 +71,14 @@ class StoryFragment : Fragment() {
         }
     }
 
+    private fun showLoading() {
+        viewModel.getLoadStory().observe(viewLifecycleOwner, {
+            if (it == true) {
+                binding.progressbar.visibility = View.GONE
+            }
+        })
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     private fun observeData() {
         viewModel.fetchPostingData().observe(
@@ -82,6 +92,43 @@ class StoryFragment : Fragment() {
     private fun getCurrentUser(user: FirebaseUser?) {
         if (user != null) {
             binding.tvUsername.text = user.displayName.toString()
+            userAuthenticated()
+        } else {
+            binding.tvUsername.text = getString(R.string.login)
+            userNotAuthenticated()
         }
     }
+
+    private fun userAuthenticated() {
+        binding.accountIcon.setOnClickListener {
+            findNavController().navigate(R.id.action_storyFragment_to_settingActivity)
+        }
+
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_storyFragment_to_cameraFragment)
+        }
+    }
+
+    private fun userNotAuthenticated() {
+        binding.accountIcon.setOnClickListener {
+            findNavController().navigate(R.id.action_storyFragment_to_loginFragment)
+        }
+
+        binding.fab.setOnClickListener {
+            AlertDialog.Builder(context)
+                .setTitle("Membuat Postingan")
+                .setMessage("Silahkan melakukan login terlebih dahulu untuk membuat postingan")
+                .setCancelable(false)
+                .setPositiveButton(
+                    "Login"
+                ) { _, _ ->
+                    findNavController().navigate(R.id.action_storyFragment_to_loginFragment)
+                }
+                .setNegativeButton(
+                    "Batal"
+                ) { _, _ -> }
+                .show()
+        }
+    }
+
 }
