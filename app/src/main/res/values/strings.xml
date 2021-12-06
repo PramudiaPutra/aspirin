@@ -71,4 +71,7 @@
     <string name="forgot_passwd">Lupa Password</string>
     <string name="reset_password_message">Masukan email yang sudah terdaftar untuk mengganti password</string>
     <string name="reset_password">Ganti Password</string>
+    <string name="privacy_policy">Dengan mengunakan aplikasi Aspirin ada telah menyetujui kebijakan privasi dari aplikasi Aspirin</string>
+    <string name="privacy_policy_link">https://sites.google.com/view/aspirinprivacypolicy/home</string>
+    <string name="click_privacy_policy">kebijakan privasi</string>
 </resources>

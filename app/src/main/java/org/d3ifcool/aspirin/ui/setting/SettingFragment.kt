@@ -1,5 +1,7 @@
 package org.d3ifcool.aspirin.ui.setting
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +40,9 @@ class SettingFragment : Fragment() {
             logOut()
         }
         binding.buttonKebijakanPrivasi.setOnClickListener{
-            findNavController().navigate(R.id.action_settingActivity_to_privasiFragment)
+            val url = getString(R.string.privacy_policy_link)
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+//            findNavController().navigate(R.id.action_settingActivity_to_privasiFragment)
         }
         binding.buttonTentangAspirin.setOnClickListener{
             findNavController().navigate(R.id.action_settingActivity_to_aboutFragment)

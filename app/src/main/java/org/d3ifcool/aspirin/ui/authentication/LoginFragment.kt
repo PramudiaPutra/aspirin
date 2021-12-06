@@ -1,11 +1,19 @@
 package org.d3ifcool.aspirin.ui.authentication
 
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
+import android.text.SpannableString
+import android.text.Spanned
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser
 import org.d3ifcool.aspirin.R
 import org.d3ifcool.aspirin.data.viewmodel.authentication.AuthViewModel
 import org.d3ifcool.aspirin.databinding.FragmentLoginBinding
+
 
 class LoginFragment : Fragment() {
 
@@ -41,6 +50,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         checkEmptyForm()
         checkLoginStatus()
+        showPrivacyPolicy(binding.tvPrivacyPolicy)
 
         binding.buttonGoogleLogin.setOnClickListener { googleLogin() }
         binding.buttonLogin.setOnClickListener { emailLogin() }
@@ -121,5 +131,31 @@ class LoginFragment : Fragment() {
         val email = binding.edtEmail.text.toString()
         val password = binding.edtPassword.text.toString()
         viewModel.login(email, password)
+    }
+
+
+    private fun showPrivacyPolicy(textView: TextView) {
+        val content = getString(R.string.privacy_policy)
+        val url = getString(R.string.privacy_policy_link)
+
+        val clickableSpan: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            }
+        }
+        val startIndex = content.indexOf(getString(R.string.click_privacy_policy))
+        val endIndex = startIndex + getString(R.string.click_privacy_policy).length
+        val spannableString = SpannableString(content)
+        spannableString.setSpan(
+            clickableSpan,
+            startIndex,
+            endIndex,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        with(textView) {
+            text = spannableString
+            movementMethod = LinkMovementMethod.getInstance()
+            highlightColor = Color.TRANSPARENT
+        }
     }
 }
