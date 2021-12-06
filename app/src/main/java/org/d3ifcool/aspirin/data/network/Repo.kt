@@ -13,12 +13,12 @@ import java.io.File
 import com.google.firebase.database.DataSnapshot
 import org.d3ifcool.aspirin.data.model.comment.CommentData
 
-import java.util.*
-
 class Repo {
     private lateinit var database: DatabaseReference
     private lateinit var storageReference: StorageReference
     var postingStatus = MutableLiveData<Boolean>()
+    var loadStory = MutableLiveData<Boolean>()
+    var isStoryEmpty = MutableLiveData<Boolean>()
 
     fun getPostingData(): LiveData<MutableList<PostingData>> {
         val dataMutableList = MutableLiveData<MutableList<PostingData>>()
@@ -31,10 +31,14 @@ class Repo {
         database.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val stories = snapshot.getValue(PostingData::class.java)
+                loadStory.postValue(true)
                 if (stories != null) {
+                    isStoryEmpty.postValue(true)
                     stories.key = snapshot.key
                     list.add(stories)
                     dataMutableList.value = list
+                } else {
+                    isStoryEmpty.postValue(false)
                 }
             }
 
@@ -142,10 +146,19 @@ class Repo {
     fun postComment(commentData: CommentData) {
         database = FirebaseDatabase.getInstance().reference
         val pushKey = database.push().key.toString()
-        database.child("comments").child(commentData.key.toString()).child(pushKey).setValue(commentData)
+        database.child("comments").child(commentData.key.toString()).child(pushKey)
+            .setValue(commentData)
     }
 
     fun getPostingStatus(): LiveData<Boolean> {
         return postingStatus
+    }
+
+    fun getStoryStatus(): LiveData<Boolean> {
+        return isStoryEmpty
+    }
+
+    fun getLoadStory(): LiveData<Boolean> {
+        return loadStory
     }
 }

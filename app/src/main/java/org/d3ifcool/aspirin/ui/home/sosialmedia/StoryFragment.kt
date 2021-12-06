@@ -35,6 +35,7 @@ class StoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.authUser.observe(viewLifecycleOwner, { getCurrentUser(it) })
+        showLoading()
 
         myadapter = SosialMediaAdapter()
         with(binding.recyclerView) {
@@ -67,6 +68,14 @@ class StoryFragment : Fragment() {
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_storyFragment_to_cameraFragment)
         }
+    }
+
+    private fun showLoading() {
+        viewModel.getLoadStory().observe(viewLifecycleOwner, {
+            if (it == true) {
+                binding.progressbar.visibility = View.GONE
+            }
+        })
     }
 
     @SuppressLint("NotifyDataSetChanged")

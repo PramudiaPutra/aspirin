@@ -21,6 +21,7 @@ class PostingViewModel : ViewModel() {
 
     private val repo = Repo()
     private var postingStatus = repo.getPostingStatus()
+    private var loadStory = repo.getLoadStory()
     val locationStatus = MutableLiveData<Boolean>()
     val locationCoordinate = MutableLiveData<LatLng>()
 
@@ -66,6 +67,10 @@ class PostingViewModel : ViewModel() {
             }
         }
         return mLocationCallback
+    }
+
+    fun getLoadStory(): LiveData<Boolean> {
+        return loadStory
     }
 
     fun getPostingStatus(): LiveData<Boolean> {
